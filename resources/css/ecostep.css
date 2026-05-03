@@ -1,0 +1,424 @@
+/* ============================================================
+   EcoStep Design System — dari DESIGN.md tokens
+   Satoshi font loaded via HTML <link> in partials/head.blade.php
+   ============================================================ */
+
+
+/* --- CSS Custom Properties (Design Tokens) --- */
+:root {
+    /* Brand Colors */
+    --eco-primary:       #1E3F35;
+    --eco-primary-light: #2D5F50;
+    --eco-secondary:     #A3D9A5;
+    --eco-accent:        #E67E5D;
+
+    /* Surface */
+    --eco-bg:       #F8F9FA;
+    --eco-card:     #FFFFFF;
+    --eco-overlay:  rgba(30, 63, 53, 0.05);
+
+    /* Text */
+    --eco-text-primary:   #111827;
+    --eco-text-secondary: #4B5563;
+    --eco-text-inverse:   #FFFFFF;
+
+    /* Semantic */
+    --eco-success: #10B981;
+    --eco-warning: #F59E0B;
+    --eco-danger:  #EF4444;
+
+    /* Radii */
+    --eco-radius-sm:   8px;
+    --eco-radius-md:   16px;
+    --eco-radius-lg:   24px;
+    --eco-radius-full: 9999px;
+
+    /* Spacing */
+    --eco-space-xs: 4px;
+    --eco-space-sm: 8px;
+    --eco-space-md: 16px;
+    --eco-space-lg: 24px;
+    --eco-space-xl: 32px;
+
+    /* Shadows */
+    --eco-shadow-soft:      0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+    --eco-shadow-elevation: 0 10px 15px -3px rgba(30,63,53,0.1);
+
+    /* Motion */
+    --eco-motion-standard: 300ms ease-in-out;
+    --eco-motion-fast:     150ms cubic-bezier(0.4,0,0.2,1);
+
+    /* Category Colors */
+    --eco-cat-food:        #10B981;
+    --eco-cat-transport:   #F59E0B;
+    --eco-cat-fashion:     #8B5CF6;
+    --eco-cat-electricity: #3B82F6;
+    --eco-cat-fuel:        #EF4444;
+    --eco-cat-flight:      #DC2626;
+    --eco-cat-groceries:   #059669;
+    --eco-cat-electronics: #6366F1;
+}
+
+/* --- Global Font Override --- */
+body, * {
+    font-family: 'Satoshi', 'Inter', system-ui, sans-serif;
+}
+
+/* ============================================================
+   Bento Grid System
+   ============================================================ */
+.bento-grid {
+    display: grid;
+    gap: var(--eco-space-lg);
+    grid-template-columns: repeat(12, 1fr);
+}
+
+.bento-card {
+    background: var(--eco-card);
+    border-radius: var(--eco-radius-lg);
+    box-shadow: var(--eco-shadow-soft);
+    padding: var(--eco-space-lg);
+    transition: box-shadow var(--eco-motion-fast), transform var(--eco-motion-fast);
+    overflow: hidden;
+    position: relative;
+}
+
+.bento-card:hover {
+    box-shadow: var(--eco-shadow-elevation);
+    transform: translateY(-1px);
+}
+
+/* Bento size variants */
+.bento-col-8  { grid-column: span 8; }
+.bento-col-4  { grid-column: span 4; }
+.bento-col-6  { grid-column: span 6; }
+.bento-col-12 { grid-column: span 12; }
+
+@media (max-width: 768px) {
+    .bento-col-8, .bento-col-4, .bento-col-6, .bento-col-12 {
+        grid-column: span 12;
+    }
+}
+
+/* ============================================================
+   Emission Number Display
+   ============================================================ */
+.eco-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--eco-primary);
+    letter-spacing: -0.02em;
+    font-feature-settings: "tnum";
+}
+
+.eco-number-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--eco-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+/* ============================================================
+   Semantic Emission Badge
+   ============================================================ */
+.eco-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--eco-space-xs);
+    padding: 4px 12px;
+    border-radius: var(--eco-radius-full);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+
+.eco-badge--success { background: rgba(16,185,129,0.12); color: var(--eco-success); }
+.eco-badge--warning { background: rgba(245,158,11,0.12); color: var(--eco-warning); }
+.eco-badge--danger  { background: rgba(239,68,68,0.12);  color: var(--eco-danger);  }
+
+/* ============================================================
+   Category Icon Chip
+   ============================================================ */
+.eco-category-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--eco-space-sm);
+    padding: 6px 14px 6px 8px;
+    border-radius: var(--eco-radius-full);
+    font-size: 0.8rem;
+    font-weight: 500;
+    background: var(--eco-overlay);
+    cursor: pointer;
+    transition: all var(--eco-motion-fast);
+    border: 2px solid transparent;
+}
+
+.eco-category-chip:hover,
+.eco-category-chip.active {
+    border-color: var(--eco-primary);
+    background: rgba(30,63,53,0.1);
+}
+
+.eco-category-chip .chip-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+/* ============================================================
+   Calculator Input Card
+   ============================================================ */
+.eco-input-card {
+    background: var(--eco-card);
+    border-radius: var(--eco-radius-lg);
+    box-shadow: var(--eco-shadow-soft);
+    padding: var(--eco-space-xl);
+}
+
+.eco-input-field {
+    width: 100%;
+    border: 2px solid #E5E7EB;
+    border-radius: var(--eco-radius-md);
+    padding: 12px 16px;
+    font-size: 1rem;
+    font-family: 'Satoshi', sans-serif;
+    color: var(--eco-text-primary);
+    background: var(--eco-bg);
+    transition: border-color var(--eco-motion-fast);
+    outline: none;
+}
+
+.eco-input-field:focus {
+    border-color: var(--eco-primary);
+    background: #fff;
+}
+
+.eco-input-field.error {
+    border-color: var(--eco-danger);
+}
+
+/* ============================================================
+   Primary CTA Button
+   ============================================================ */
+.eco-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--eco-space-sm);
+    padding: 12px 24px;
+    border-radius: var(--eco-radius-md);
+    font-weight: 600;
+    font-size: 0.95rem;
+    font-family: 'Satoshi', sans-serif;
+    border: none;
+    cursor: pointer;
+    transition: all var(--eco-motion-fast);
+}
+
+.eco-btn-primary {
+    background: var(--eco-primary);
+    color: var(--eco-text-inverse);
+}
+
+.eco-btn-primary:hover {
+    background: var(--eco-primary-light);
+    transform: translateY(-1px);
+    box-shadow: var(--eco-shadow-elevation);
+}
+
+.eco-btn-primary:active {
+    transform: translateY(0);
+}
+
+.eco-btn-secondary {
+    background: var(--eco-overlay);
+    color: var(--eco-primary);
+    border: 2px solid var(--eco-secondary);
+}
+
+.eco-btn-secondary:hover {
+    background: rgba(30,63,53,0.1);
+}
+
+.eco-btn-danger {
+    background: rgba(239,68,68,0.08);
+    color: var(--eco-danger);
+    border: 2px solid transparent;
+}
+
+.eco-btn-danger:hover {
+    background: rgba(239,68,68,0.15);
+    border-color: var(--eco-danger);
+}
+
+.eco-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* ============================================================
+   History List Item
+   ============================================================ */
+.eco-history-item {
+    display: flex;
+    align-items: center;
+    gap: var(--eco-space-md);
+    padding: var(--eco-space-md);
+    border-radius: var(--eco-radius-md);
+    background: var(--eco-card);
+    border: 1px solid #F0F0F0;
+    transition: all var(--eco-motion-fast);
+}
+
+.eco-history-item:hover {
+    border-color: var(--eco-secondary);
+    box-shadow: var(--eco-shadow-soft);
+}
+
+.eco-history-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: var(--eco-radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+/* ============================================================
+   Insight Badge (Achievements)
+   ============================================================ */
+.eco-insight-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--eco-space-sm);
+    padding: var(--eco-space-lg);
+    border-radius: var(--eco-radius-lg);
+    background: var(--eco-card);
+    box-shadow: var(--eco-shadow-soft);
+    text-align: center;
+    transition: all var(--eco-motion-fast);
+}
+
+.eco-insight-badge .badge-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    background: radial-gradient(circle, rgba(163,217,165,0.3) 0%, rgba(30,63,53,0.05) 100%);
+}
+
+.eco-insight-badge.locked {
+    opacity: 0.45;
+    filter: grayscale(1);
+}
+
+.eco-insight-badge.earned .badge-icon {
+    background: radial-gradient(circle, rgba(163,217,165,0.5) 0%, rgba(30,63,53,0.15) 100%);
+}
+
+/* ============================================================
+   Toast / Notification
+   ============================================================ */
+.eco-toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--eco-primary);
+    color: var(--eco-text-inverse);
+    padding: 14px 20px;
+    border-radius: var(--eco-radius-md);
+    box-shadow: var(--eco-shadow-elevation);
+    font-weight: 500;
+    font-size: 0.9rem;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: var(--eco-space-sm);
+    animation: slideUp var(--eco-motion-standard) both;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* ============================================================
+   Count-up Animation (Calculator)
+   ============================================================ */
+.eco-co2-display {
+    transition: color var(--eco-motion-fast);
+}
+
+.eco-co2-display.updating {
+    animation: pulse 600ms ease-in-out;
+}
+
+@keyframes pulse {
+    0%   { opacity: 1; }
+    50%  { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+/* ============================================================
+   Green Nudge Card
+   ============================================================ */
+.eco-nudge {
+    border-left: 4px solid var(--eco-secondary);
+    padding: var(--eco-space-md);
+    border-radius: 0 var(--eco-radius-md) var(--eco-radius-md) 0;
+    background: rgba(163,217,165,0.08);
+    font-size: 0.9rem;
+    color: var(--eco-text-primary);
+    line-height: 1.6;
+}
+
+/* ============================================================
+   Landing Page Hero (welcome.blade.php overrides)
+   ============================================================ */
+.eco-hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--eco-primary) 0%, #2D5F50 60%, #1A3530 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.eco-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23A3D9A5' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+}
+
+.eco-hero-glass {
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: var(--eco-radius-lg);
+    padding: var(--eco-space-xl);
+}
+
+/* ============================================================
+   Sidebar EcoStep Nav Overrides
+   ============================================================ */
+.eco-nav-logo {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--eco-primary);
+    display: flex;
+    align-items: center;
+    gap: var(--eco-space-sm);
+}

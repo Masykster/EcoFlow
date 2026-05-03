@@ -1,0 +1,198 @@
+{
+  "info": {
+    "_postman_id": "ecostep-carbon-api-v1",
+    "name": "EcoStep Carbon Analytics API",
+    "description": "EcoStep API — Laravel 11 RESTful service for carbon footprint analytics (SDG 13). JWT + Basic Auth + API Key + SNAP BI simulation.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url",   "value": "http://localhost:8000/api/v1",      "type": "string" },
+    { "key": "jwt_token",  "value": "",                                   "type": "string" },
+    { "key": "api_key",    "value": "",                                   "type": "string" },
+    { "key": "snap_partner_id", "value": "ECOSTEP-001",                  "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/auth/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Budi Santoso\",\n  \"email\": \"budi@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "description": "Register user, returns JWT token + api_key."
+          },
+          "event": [{
+            "listen": "test",
+            "script": {
+              "exec": [
+                "const res = pm.response.json();",
+                "if (res.token) pm.collectionVariables.set('jwt_token', res.token);",
+                "if (res.user?.api_key) pm.collectionVariables.set('api_key', res.user.api_key);"
+              ],
+              "type": "text/javascript"
+            }
+          }]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"budi@example.com\",\n  \"password\": \"password123\"\n}"
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": {
+              "exec": [
+                "const res = pm.response.json();",
+                "if (res.token) pm.collectionVariables.set('jwt_token', res.token);"
+              ],
+              "type": "text/javascript"
+            }
+          }]
+        },
+        {
+          "name": "Me",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{jwt_token}}" }],
+            "url": "{{base_url}}/auth/me"
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{jwt_token}}" }],
+            "url": "{{base_url}}/auth/logout"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Transactions",
+      "item": [
+        {
+          "name": "List Transactions",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{jwt_token}}" }],
+            "url": "{{base_url}}/transactions"
+          }
+        },
+        {
+          "name": "Create Transaction (Spending)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" },
+              { "key": "Content-Type",  "value": "application/json" }
+            ],
+            "url": "{{base_url}}/transactions",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"merchant_name\": \"GOPAY*WARUNG MAKAN SEDERHANA\",\n  \"amount\": 45000,\n  \"type\": \"spending\",\n  \"transacted_at\": \"2026-04-27 10:00:00\"\n}"
+            },
+            "description": "Merchant name auto-categorized via regex. CO2e calculated instantly."
+          }
+        },
+        {
+          "name": "Create Transaction (Transport)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" },
+              { "key": "Content-Type",  "value": "application/json" }
+            ],
+            "url": "{{base_url}}/transactions",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"merchant_name\": \"GRAB*GRABCAR\",\n  \"amount\": 32000,\n  \"type\": \"transport\",\n  \"distance_km\": 8.5,\n  \"transacted_at\": \"2026-04-27 08:30:00\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Carbon Analytics",
+      "item": [
+        {
+          "name": "Analyze Carbon (Bulk)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{jwt_token}}" }],
+            "url": "{{base_url}}/analyze/carbon",
+            "description": "Re-calculate CO2e for ALL user transactions. Returns total, avg, and social norm comparison."
+          }
+        },
+        {
+          "name": "Dashboard Weekly",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{jwt_token}}" }],
+            "url": "{{base_url}}/dashboard/weekly"
+          }
+        },
+        {
+          "name": "Dashboard Monthly",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{jwt_token}}" }],
+            "url": "{{base_url}}/dashboard/monthly"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Gamification",
+      "item": [
+        {
+          "name": "Leaderboard",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{jwt_token}}" }],
+            "url": "{{base_url}}/gamification/leaderboard"
+          }
+        },
+        {
+          "name": "Green Nudges",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{jwt_token}}" }],
+            "url": "{{base_url}}/tips/green-nudges",
+            "description": "Returns 3 random green tips based on user's highest emission category."
+          }
+        }
+      ]
+    },
+    {
+      "name": "SNAP BI Simulation",
+      "item": [
+        {
+          "name": "Bank Statement (SNAP BI)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "X-API-KEY",      "value": "{{api_key}}" },
+              { "key": "X-PARTNER-ID",   "value": "{{snap_partner_id}}" },
+              { "key": "X-TIMESTAMP",    "value": "2026-04-27T10:00:00+07:00" },
+              { "key": "X-SIGNATURE",    "value": "REPLACE_WITH_HMAC_SHA256(partnerId:timestamp, APP_KEY)" }
+            ],
+            "url": "{{base_url}}/snap/bank-statement",
+            "description": "Simulate SNAP BI bank-statement pull. Signature = HMAC-SHA256(X-PARTNER-ID:X-TIMESTAMP, APP_KEY). Timestamp must be within ±5 minutes of server time."
+          }
+        }
+      ]
+    }
+  ]
+}
