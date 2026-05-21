@@ -79,6 +79,7 @@
             @endif
         </div>
 
+        @if(!empty($smartRecommendation))
         <div class="bg-white/70 dark:bg-[#1E2623]/35 backdrop-blur-md border border-white/60 dark:border-white/[0.05] rounded-[24px] p-6 shadow-[0_8px_30px_rgba(0,0,0,0.02)]">
             <p class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-4 flex items-center gap-2">
                 <svg class="w-4 h-4 text-[#2D5F50] dark:text-[#A3D9A5] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -116,6 +117,25 @@
                 </div>
             </div>
         </div>
+        @else
+        <div class="bg-white/70 dark:bg-[#1E2623]/35 backdrop-blur-md border border-white/60 dark:border-white/[0.05] rounded-[24px] p-6 shadow-[0_8px_30px_rgba(0,0,0,0.02)]">
+            <p class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-4 flex items-center gap-2">
+                <svg class="w-4 h-4 text-[#2D5F50] dark:text-[#A3D9A5] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925-3.546 5.974 5.974 0 01-2.133-1A3.75 3.75 0 003 7.5V18a3.75 3.75 0 003.75 3.75h5.25m3-3a3.75 3.75 0 01-.495-7.467 5.99 5.99 0 011.925-3.546 5.974 5.974 0 002.133-1A3.75 3.75 0 0121 7.5V18a3.75 3.75 0 01-3.75 3.75h-5.25"/>
+                </svg>
+                Rekomendasi Cerdas AI
+            </p>
+            <div class="flex items-start gap-4">
+                <div class="w-10 h-10 shrink-0 bg-[#A3D9A5]/20 dark:bg-[#A3D9A5]/10 rounded-2xl flex items-center justify-center text-[#2D5F50] dark:text-[#A3D9A5] shadow-inner">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                </div>
+                <div class="space-y-1">
+                    <p class="text-xs font-bold text-gray-800 dark:text-gray-200">Belum ada data emisi</p>
+                    <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-relaxed">Mulai catat aktivitasmu di kalkulator untuk mendapatkan rekomendasi cerdas yang dipersonalisasi.</p>
+                </div>
+            </div>
+        </div>
+        @endif
 
         {{-- Feature 4: Virtual Eco-Home (High Fidelity Custom SVG Widget) --}}
         <div class="bg-white/70 dark:bg-[#1E2623]/35 backdrop-blur-md border border-white/60 dark:border-white/[0.05] rounded-[24px] p-6 shadow-[0_8px_30px_rgba(0,0,0,0.02)] overflow-hidden">
