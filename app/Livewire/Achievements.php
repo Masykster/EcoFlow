@@ -13,10 +13,10 @@ class Achievements extends Component
     public array $allBadges = [];
 
     private array $badgeMeta = [
-        'Pejuang MRT'         => ['icon' => '🚆', 'desc' => 'Gunakan transportasi rendah emisi (CO2 ≤ 0.5 kg per perjalanan)'],
-        'Vegetarian Mingguan' => ['icon' => '🥗', 'desc' => 'Pilih makanan rendah karbon (CO2 ≤ 0.3 kg per makan)'],
-        'Carbon Fighter'      => ['icon' => '🌱', 'desc' => 'Kumpulkan 200 poin EcoStep'],
-        'Eco Warrior'         => ['icon' => '🌍', 'desc' => 'Kumpulkan 500 poin EcoStep'],
+        'Pejuang MRT'         => ['icon' => 'mrt', 'desc' => 'Gunakan transportasi rendah emisi (CO2 ≤ 0.5 kg per perjalanan)'],
+        'Vegetarian Mingguan' => ['icon' => 'vegetarian', 'desc' => 'Pilih makanan rendah karbon (CO2 ≤ 0.3 kg per makan)'],
+        'Carbon Fighter'      => ['icon' => 'carbon', 'desc' => 'Kumpulkan 200 poin EcoStep'],
+        'Eco Warrior'         => ['icon' => 'warrior', 'desc' => 'Kumpulkan 500 poin EcoStep'],
     ];
 
     public function mount(): void

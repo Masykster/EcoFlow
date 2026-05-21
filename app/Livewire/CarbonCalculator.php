@@ -47,6 +47,7 @@ class CarbonCalculator extends Component
     public float  $previewCo2e = 0;
     public bool   $saved       = false;
     public string $errorMsg    = '';
+    public bool   $isGuestMode = false;
 
     // Loaded from DB
     public array $categories    = [];
