@@ -1,3 +1,9 @@
+@php
+    $totalUsers = max(2840, \App\Models\User::count());
+    $totalSavedKg = max(14850.2, round(\App\Models\UserPoint::sum('points') * 0.5 + 14850.2, 1));
+    $formattedUsers = number_format($totalUsers, 0, ',', '.');
+    $formattedSaved = number_format($totalSavedKg, 1, ',', '.');
+@endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
 <head>
@@ -69,90 +75,127 @@
 <body class="antialiased bg-[#FAFAFA] selection:bg-[#62F369] selection:text-black">
 
     <!-- Floating Navbar (Jejakin Style) -->
-    <div class="fixed top-6 left-0 right-0 z-50 px-4 md:px-0 flex justify-center pointer-events-none">
-        <nav class="w-full max-w-6xl bg-white/95 backdrop-blur-md shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100 rounded-full px-6 py-3 flex items-center justify-between pointer-events-auto transition-all">
-            <div class="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
-                <!-- Logo Icon -->
-                <svg class="w-8 h-8 text-[#1A4D2E]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2"/>
-                    <path d="M12 16V12M12 8H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M8 12C8 12 9 8 12 8C15 8 16 12 16 12C16 12 15 16 12 16C9 16 8 12 8 12Z" fill="currentColor"/>
-                </svg>
-                <span class="text-xl font-bold tracking-tight text-[#171717]">EcoFlow</span>
-            </div>
-            
-            <div id="nav-links" class="hidden md:flex items-center gap-8 text-sm font-semibold text-[#555555]">
-                <a href="#beranda" class="nav-link text-[#1A4D2E] relative after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-[2px] after:bg-[#62F369] after:rounded-full">Beranda</a>
-                <a href="#tentang-kami" class="nav-link hover:text-[#1A4D2E] transition-colors">Tentang Kami</a>
-                <a href="#kalkulator" class="nav-link hover:text-[#1A4D2E] transition-colors">Kalkulator</a>
-                <a href="#product-duel" class="nav-link hover:text-[#1A4D2E] transition-colors">Product duel</a>
-            </div>
-            
-            <div>
-                @auth
-                    <a href="{{ url('/dashboard') }}" class="bg-[#171717] hover:bg-[#62F369] hover:text-[#171717] text-white px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300">Dashboard</a>
-                @else
-                    <a href="{{ route('login') }}" class="bg-[#171717] hover:bg-[#62F369] hover:text-[#171717] text-white px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300">Sign In</a>
-                @endauth
+    <div id="floating-navbar-container" class="fixed top-6 left-0 right-0 z-50 px-4 md:px-0 flex justify-center pointer-events-none transition-all duration-500 transform -translate-y-12 opacity-0 scale-95">
+        <nav id="floating-navbar" class="bg-white/70 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.03)] shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] rounded-full px-6 py-3 flex items-center justify-between pointer-events-auto transition-all duration-700 ease-out w-[60px] opacity-0 overflow-hidden">
+            <div id="navbar-content" class="w-[1100px] max-w-[85vw] flex justify-between items-center opacity-0 transition-opacity duration-300 pointer-events-none flex-shrink-0">
+                <div class="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
+                    <!-- Logo Icon -->
+                    <img src="{{ asset('favicon.svg') }}" alt="EcoFlow Logo" class="w-8 h-8 object-contain">
+                    <span class="text-xl font-bold tracking-tight text-[#111827]">EcoFlow</span>
+                </div>
+                
+                <div id="nav-links" class="hidden md:flex items-center gap-8 text-sm font-semibold text-[#4B5563]">
+                    <a href="#beranda" class="nav-link text-[#1E3F35] relative after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-[2px] after:bg-[#A3D9A5] after:rounded-full">Beranda</a>
+                    <a href="#tentang-kami" class="nav-link hover:text-[#1E3F35] transition-colors">Tentang Kami</a>
+                    <a href="#kalkulator" class="nav-link hover:text-[#1E3F35] transition-colors">Kalkulator</a>
+                    <a href="#cta-offset" class="nav-link hover:text-[#1E3F35] transition-colors">Aksi Hijau</a>
+                    <a href="#faq" class="nav-link hover:text-[#1E3F35] transition-colors">FAQ</a>
+                </div>
+                
+                <div>
+                    @auth
+                        <a href="{{ url('/dashboard') }}" class="bg-[#1E3F35] hover:bg-[#A3D9A5] hover:text-[#1E3F35] text-white px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 active:scale-[0.98]">Dashboard</a>
+                    @else
+                        <a href="{{ route('login') }}" class="bg-[#1E3F35] hover:bg-[#A3D9A5] hover:text-[#1E3F35] text-white px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 active:scale-[0.98]">Sign In</a>
+                    @endauth
+                </div>
             </div>
         </nav>
     </div>
 
-    <!-- Hero Section -->
-    <section id="beranda" class="relative pt-40 pb-24 md:pt-48 md:pb-32 px-6 lg:px-16 overflow-hidden bg-white">
-        <!-- Abstract Background Shapes -->
-        <div class="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] rounded-full bg-[#62F369]/10 blur-[100px] pointer-events-none"></div>
-        <div class="absolute bottom-[-10%] left-[-5%] w-[400px] h-[400px] rounded-full bg-[#1A4D2E]/5 blur-[80px] pointer-events-none"></div>
-        <div class="absolute inset-0 bg-dots opacity-40 pointer-events-none"></div>
+    <!-- Hero Section: Scroll Expansion Paradigm -->
+    <section id="beranda" class="relative h-[200vh] w-full bg-[#0F211C] overflow-visible">
+        <!-- Sticky viewport container to hold full-screen layout while scroll animation plays -->
+        <div class="w-full h-[100vh] sticky top-0 overflow-hidden flex flex-col items-center justify-start z-10">
+            
+            <!-- Background Image Layer: Fades out as scroll progress increases -->
+            <div id="hero-bg-image" class="absolute inset-0 z-0 h-full w-full pointer-events-none transition-opacity duration-75">
+                <img src="/images/hero_forest.png" alt="EcoFlow Background" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-[#0F211C]/35"></div>
+            </div>
 
-        <div class="relative z-10 max-w-5xl mx-auto text-center reveal-up">
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#F3F4F6] border border-gray-200 text-xs font-bold text-[#555555] mb-8 uppercase tracking-widest">
-                <span class="w-2 h-2 rounded-full bg-[#62F369] animate-pulse"></span>
-                Standar Emisi IPCC
-            </div>
-            <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold text-[#171717] leading-[1.15] mb-8 tracking-tight">
-                Langkah Kecil untuk<br>
-                <span class="relative">
-                    Jejak yang Lebih <span class="text-[#1A4D2E] relative z-10">Hijau.</span>
-                    <svg class="absolute w-full h-4 -bottom-1 left-0 text-[#62F369] -z-10" viewBox="0 0 100 20" preserveAspectRatio="none"><path d="M0 15 Q 50 0 100 15" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round"/></svg>
-                </span>
-            </h1>
-            <p class="text-lg md:text-xl text-[#555555] mb-12 leading-relaxed max-w-3xl mx-auto font-medium">
-                Pantau dan kurangi emisi karbon harianmu dengan kalkulator cerdas berbasis standar IPCC. Aksi nyata untuk mitigasi perubahan iklim dimulai dari genggamanmu.
-            </p>
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="#kalkulator" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#62F369] text-[#171717] hover:bg-[#4CE454] active:scale-[0.98] active:translate-y-0 px-8 py-4 rounded-full font-bold transition-all text-lg hover-lift">
-                    Hitung Jejak Karbonmu
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                </a>
-            </div>
-        </div>
-        
-        <!-- Dashboard Mockup Image Reveal -->
-        <div class="relative z-10 max-w-6xl mx-auto mt-20 reveal-up delay-200">
-            <div class="rounded-[24px] overflow-hidden shadow-[0_20px_50px_rgb(0,0,0,0.1)] border border-gray-100 bg-white">
-                <img src="/images/hero_forest.png" class="w-full h-[400px] md:h-[500px] object-cover" alt="EcoFlow Dashboard">
+            <!-- Dot Grid Background for Jejakin theme -->
+            <div class="absolute inset-0 bg-dots opacity-20 pointer-events-none z-10"></div>
+
+            <!-- Content Wrapper -->
+            <div class="container mx-auto flex flex-col items-center justify-start relative z-20 h-full">
+                <div class="flex flex-col items-center justify-center w-full h-full relative">
+                    
+                    <!-- Expanding Media Container (video) -->
+                    <div id="hero-media-container" class="absolute z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-[24px] overflow-hidden bg-black shadow-[0px_0px_50px_rgba(0,0,0,0.3)] transition-none" style="width: 350px; height: 450px; max-width: 95vw; max-height: 85vh;">
+                        <div class="relative w-full h-full pointer-events-none">
+                            <video id="hero-media-video" src="https://me7aitdbxq.ufs.sh/f/2wsMIGDMQRdYuZ5R8ahEEZ4aQK56LizRdfBSqeDMsmUIrJN1" autoPlay muted loop playsInline preload="auto" class="w-full h-full object-cover rounded-xl"></video>
+                            <div class="absolute inset-0 bg-black/35 z-10"></div>
+                        </div>
+                    </div>
+
+                    <!-- Slide-out Title Texts: Translate away horizontally -->
+                    <div id="hero-slide-titles" class="flex flex-col items-center justify-center text-center gap-4 w-full relative z-30 pointer-events-none mix-blend-difference">
+                        <h2 id="hero-title-first" class="text-5xl md:text-7xl font-extrabold text-[#A3D9A5] transition-none leading-none tracking-tight">EcoFlow</h2>
+                        <h2 id="hero-title-rest" class="text-4xl md:text-6xl font-extrabold text-white text-center transition-none leading-none tracking-tight">Carbon Analytics</h2>
+                    </div>
+
+                    <!-- Text markers / scrolling instructions -->
+                    <div id="hero-scroll-marker" class="absolute bottom-10 left-0 right-0 z-30 flex flex-col items-center justify-center pointer-events-none text-white/70 font-medium text-sm transition-all duration-300">
+                        <span class="animate-bounce text-lg">↓</span>
+                        <span>Scroll untuk Memulai</span>
+                    </div>
+
+                    <!-- Expanded Hero Content: Fades in after expansion is complete -->
+                    <div id="hero-expanded-content" class="absolute inset-0 z-40 flex flex-col items-center justify-center px-6 text-center opacity-0 pointer-events-none transition-opacity duration-500 max-w-4xl mx-auto gap-6">
+                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#1E3F35]/25 border border-white/10 text-xs font-bold text-[#A3D9A5] uppercase tracking-widest">
+                            <span class="w-2 h-2 rounded-full bg-[#A3D9A5] animate-pulse"></span>
+                            Standar Emisi IPCC
+                        </div>
+                        <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-none tracking-tight">
+                            Langkah Kecil untuk<br>
+                            <span class="relative text-[#A3D9A5]">
+                                Jejak yang Lebih Hijau.
+                            </span>
+                        </h1>
+                        <p class="text-base md:text-xl text-gray-300 leading-relaxed max-w-2xl font-medium">
+                            Pantau dan kurangi emisi karbon harianmu dengan kalkulator cerdas berbasis standar IPCC. Aksi nyata untuk mitigasi perubahan iklim dimulai dari genggamanmu.
+                        </p>
+                        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-2">
+                            <a href="#kalkulator" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#E67E5D] text-white hover:bg-[#d96d4b] active:scale-[0.98] px-8 py-4 rounded-full font-bold transition-all text-lg shadow-lg pointer-events-auto">
+                                Hitung Jejak Karbonmu
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Mengapa EcoFlow Section -->
-    <section id="tentang-kami" class="py-32 px-6 lg:px-16 bg-[#FAFAFA] overflow-hidden">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-16 lg:gap-24">
+    <section id="tentang-kami" class="py-32 px-6 lg:px-16 bg-white overflow-hidden relative">
+        <!-- White Sphere Grid & Yellow-Green Glow Background -->
+        <div class="absolute inset-0 z-0 pointer-events-none" style="
+            background: white;
+            background-image: 
+                linear-gradient(to right, rgba(30,63,53,0.06) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(30,63,53,0.06) 1px, transparent 1px),
+                radial-gradient(circle at 50% 50%, rgba(163,217,165,0.2) 0%, rgba(163,217,165,0.05) 40%, transparent 80%),
+                radial-gradient(circle at center, #FFF991 0%, transparent 70%);
+            background-size: 32px 32px, 32px 32px, 100% 100%, 100% 100%;
+            opacity: 0.85;
+        "></div>
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-16 lg:gap-24 relative z-10">
             
             <!-- Left Text -->
             <div class="w-full md:w-1/2 reveal-left">
-                <div class="inline-flex px-3 py-1 rounded-full bg-[#E0FBE1] text-[#1A4D2E] text-xs font-bold uppercase tracking-wider mb-6">
+                <div class="inline-flex px-3 py-1 rounded-full bg-[#1E3F35]/15 text-[#1E3F35] text-xs font-bold uppercase tracking-wider mb-6">
                     Tentang Platform
                 </div>
                 <h2 class="text-4xl lg:text-5xl font-extrabold text-[#171717] mb-6 tracking-tight leading-tight">
-                    Mengapa <span class="text-[#1A4D2E]">EcoFlow?</span>
+                    Mengapa <span class="text-[#1E3F35]">EcoFlow?</span>
                 </h2>
                 <p class="text-xl text-[#555555] leading-relaxed font-medium mb-8">
                     Kami menghadirkan solusi digital untuk membantu kamu memahami dampak aktivitas harian terhadap lingkungan dan mengambil aksi nyata bagi iklim.
                 </p>
                 <div class="flex gap-2 mb-8">
-                    <div class="w-12 h-1.5 bg-[#62F369] rounded-full"></div>
+                    <div class="w-12 h-1.5 bg-[#A3D9A5] rounded-full"></div>
                     <div class="w-4 h-1.5 bg-gray-200 rounded-full"></div>
                 </div>
             </div>
@@ -178,16 +221,16 @@
                 </div>
                 
                 <!-- Navigation arrows overlay -->
-                <button id="slider-prev" class="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 backdrop-blur hover:bg-[#62F369] rounded-full flex items-center justify-center text-[#171717] shadow-xl transition-all transform hover:scale-110 opacity-0 group-hover:opacity-100">
+                <button id="slider-prev" class="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 backdrop-blur hover:bg-[#A3D9A5] rounded-full flex items-center justify-center text-[#171717] shadow-xl transition-all transform hover:scale-110 opacity-0 group-hover:opacity-100">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
                 </button>
-                <button id="slider-next" class="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 backdrop-blur hover:bg-[#62F369] rounded-full flex items-center justify-center text-[#171717] shadow-xl transition-all transform hover:scale-110 opacity-0 group-hover:opacity-100">
+                <button id="slider-next" class="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 backdrop-blur hover:bg-[#A3D9A5] rounded-full flex items-center justify-center text-[#171717] shadow-xl transition-all transform hover:scale-110 opacity-0 group-hover:opacity-100">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
                 </button>
                 
                 <!-- Dots overlay -->
                 <div class="absolute bottom-8 right-8 flex gap-2" id="slider-dots">
-                    <button class="h-2 rounded-full bg-[#62F369] w-6 transition-all slider-dot" data-idx="0"></button>
+                    <button class="h-2 rounded-full bg-[#1E3F35] w-6 transition-all slider-dot" data-idx="0"></button>
                     <button class="w-2 h-2 rounded-full bg-white/50 transition-all slider-dot" data-idx="1"></button>
                     <button class="w-2 h-2 rounded-full bg-white/50 transition-all slider-dot" data-idx="2"></button>
                 </div>
@@ -197,13 +240,13 @@
     </section>
 
     <!-- Features Section -->
-    <section class="py-32 px-6 lg:px-16 bg-[#171717] text-white text-center relative overflow-hidden">
+    <section class="py-32 px-6 lg:px-16 bg-[#0F211C] text-white text-center relative overflow-hidden">
         <!-- Abstract Dark Shapes -->
-        <div class="absolute top-0 right-0 w-96 h-96 bg-[#1A4D2E]/30 rounded-full blur-[100px] pointer-events-none"></div>
-        <div class="absolute bottom-0 left-0 w-96 h-96 bg-[#62F369]/10 rounded-full blur-[100px] pointer-events-none"></div>
+        <div class="absolute top-0 right-0 w-96 h-96 bg-[#1E3F35]/40 rounded-full blur-[100px] pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-[#A3D9A5]/10 rounded-full blur-[100px] pointer-events-none"></div>
         
         <div class="max-w-7xl mx-auto relative z-10">
-            <div class="inline-flex px-3 py-1 rounded-full bg-white/10 text-[#62F369] text-xs font-bold uppercase tracking-wider mb-6 reveal-up border border-white/10">
+            <div class="inline-flex px-3 py-1 rounded-full bg-white/10 text-[#A3D9A5] text-xs font-bold uppercase tracking-wider mb-6 reveal-up border border-white/10">
                 Fitur Utama
             </div>
             <h2 class="text-4xl md:text-5xl font-extrabold mb-6 reveal-up">Fitur Andal untuk Aksi Hijau</h2>
@@ -211,27 +254,27 @@
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Feature 1 -->
-                <div class="bg-[#222222] border border-gray-800 p-10 rounded-[24px] text-left hover-lift reveal-up delay-100 transition-all duration-300">
-                    <div class="w-14 h-14 bg-[#1A4D2E] rounded-[16px] mb-8 flex items-center justify-center">
-                        <svg class="w-7 h-7 text-[#62F369]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                <div class="bg-[#142C25] border border-[#1E3F35]/40 p-10 rounded-[24px] text-left hover-lift reveal-up delay-100 transition-all duration-300">
+                    <div class="w-14 h-14 bg-[#1E3F35] rounded-[16px] mb-8 flex items-center justify-center">
+                        <svg class="w-7 h-7 text-[#A3D9A5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                     </div>
                     <h3 class="text-2xl font-bold mb-4">Kalkulasi Presisi</h3>
                     <p class="text-gray-400 mb-8 leading-relaxed">Hitung emisi CO2e dari transportasi hingga konsumsi makanan secara akurat menggunakan metodologi IPCC yang diakui dunia.</p>
                 </div>
                 
                 <!-- Feature 2 -->
-                <div class="bg-[#222222] border border-gray-800 p-10 rounded-[24px] text-left hover-lift reveal-up delay-200 transition-all duration-300">
-                    <div class="w-14 h-14 bg-[#1A4D2E] rounded-[16px] mb-8 flex items-center justify-center">
-                        <svg class="w-7 h-7 text-[#62F369]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                <div class="bg-[#142C25] border border-[#1E3F35]/40 p-10 rounded-[24px] text-left hover-lift reveal-up delay-200 transition-all duration-300">
+                    <div class="w-14 h-14 bg-[#1E3F35] rounded-[16px] mb-8 flex items-center justify-center">
+                        <svg class="w-7 h-7 text-[#A3D9A5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
                     </div>
                     <h3 class="text-2xl font-bold mb-4">Analitik Personal</h3>
                     <p class="text-gray-400 mb-8 leading-relaxed">Pantau riwayat emisi mingguan dan bulanan kamu melalui dashboard bento-grid yang dirancang untuk memudahkan pemantauan progres.</p>
                 </div>
                 
                 <!-- Feature 3 -->
-                <div class="bg-[#222222] border border-gray-800 p-10 rounded-[24px] text-left hover-lift reveal-up delay-300 transition-all duration-300">
-                    <div class="w-14 h-14 bg-[#1A4D2E] rounded-[16px] mb-8 flex items-center justify-center">
-                        <svg class="w-7 h-7 text-[#62F369]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <div class="bg-[#142C25] border border-[#1E3F35]/40 p-10 rounded-[24px] text-left hover-lift reveal-up delay-300 transition-all duration-300">
+                    <div class="w-14 h-14 bg-[#1E3F35] rounded-[16px] mb-8 flex items-center justify-center">
+                        <svg class="w-7 h-7 text-[#A3D9A5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </div>
                     <h3 class="text-2xl font-bold mb-4">Aksi & Penghargaan</h3>
                     <p class="text-gray-400 mb-8 leading-relaxed">Dapatkan tips ramah lingkungan yang dipersonalisasi dan raih badge eksklusif sebagai apresiasi atas kontribusi hijaumu.</p>
@@ -240,16 +283,24 @@
         </div>
     </section>
 
-    <!-- Mengapa EcoFlow Begitu Penting? Section -->
     <section class="py-32 px-6 lg:px-16 bg-white overflow-hidden relative">
-        <div class="absolute inset-0 bg-dots opacity-30 pointer-events-none"></div>
+        <!-- White Grid with Dots Background -->
+        <div class="absolute inset-0 z-0 pointer-events-none" style="
+            background: white;
+            background-image: 
+                linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px),
+                radial-gradient(circle, rgba(51,65,85,0.4) 1px, transparent 1px);
+            background-size: 20px 20px, 20px 20px, 20px 20px;
+            background-position: 0 0, 0 0, 0 0;
+        "></div>
         <div class="max-w-7xl mx-auto relative z-10">
             <div class="text-center mb-20 reveal-up">
-                <div class="inline-flex px-3 py-1 rounded-full bg-[#E0FBE1] text-[#1A4D2E] text-xs font-bold uppercase tracking-wider mb-6">
+                <div class="inline-flex px-3 py-1 rounded-full bg-[#1E3F35]/15 text-[#1E3F35] text-xs font-bold uppercase tracking-wider mb-6">
                     Dampak Iklim
                 </div>
                 <h2 class="text-4xl md:text-5xl font-extrabold text-[#171717] tracking-tight">
-                    Mengapa <span class="text-[#1A4D2E]">EcoFlow</span> Begitu Penting?
+                    Mengapa <span class="text-[#1E3F35]">EcoFlow</span> Begitu Penting?
                 </h2>
             </div>
             
@@ -260,7 +311,7 @@
                     <!-- Card 1 -->
                     <div class="bg-white border border-gray-100 p-8 rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover-lift reveal-left relative overflow-hidden group">
                         <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                            <svg class="w-16 h-16 text-[#1A4D2E]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                            <svg class="w-16 h-16 text-[#1E3F35]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                             </svg>
                         </div>
@@ -273,7 +324,7 @@
                     <!-- Card 2 -->
                     <div class="bg-white border border-gray-100 p-8 rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover-lift reveal-left delay-100 relative overflow-hidden group">
                         <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                            <svg class="w-16 h-16 text-[#1A4D2E]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                            <svg class="w-16 h-16 text-[#1E3F35]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751A11.99 11.99 0 0112 2.715z" />
                             </svg>
                         </div>
@@ -287,16 +338,16 @@
                 
                 <!-- Center Image (Globe) -->
                 <div class="w-full lg:w-1/3 flex justify-center items-center py-10 lg:py-0 relative z-0 reveal-zoom">
-                    <div class="absolute inset-0 bg-[#62F369]/20 rounded-full blur-[80px] animate-pulse"></div>
+                    <div class="absolute inset-0 bg-[#A3D9A5]/20 rounded-full blur-[80px] animate-pulse"></div>
                     <img src="/images/earth_cartoon.png" class="w-64 h-64 md:w-80 md:h-80 object-contain drop-shadow-2xl relative z-10 animate-[spin_60s_linear_infinite]" alt="Earth Cartoon">
                 </div>
-
+ 
                 <!-- Right Cards -->
                 <div class="w-full lg:w-1/3 flex flex-col gap-6 relative z-10">
                     <!-- Card 3 -->
                     <div class="bg-white border border-gray-100 p-8 rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover-lift reveal-right relative overflow-hidden group">
                         <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                            <svg class="w-16 h-16 text-[#1A4D2E]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                            <svg class="w-16 h-16 text-[#1E3F35]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.105-7.5 11.25-7.5 11.25S4.5 17.605 4.5 10.5a7.5 7.5 0 1115 0z" />
                             </svg>
                         </div>
@@ -309,7 +360,7 @@
                     <!-- Card 4 -->
                     <div class="bg-white border border-gray-100 p-8 rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover-lift reveal-right delay-100 relative overflow-hidden group">
                         <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                            <svg class="w-16 h-16 text-[#1A4D2E]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                            <svg class="w-16 h-16 text-[#1E3F35]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18M12 3C8.5 7 5.5 11 5.5 15c0 3.5 2.5 6 6.5 6m0-18c3.5 4 6.5 8 6.5 12 0 3.5-2.5 6-6.5 6" />
                             </svg>
                         </div>
@@ -326,7 +377,7 @@
     </section>
 
     <!-- Kalkulator Info Section -->
-    <section id="kalkulator" class="pt-32 pb-48 bg-[#FAFAFA] relative overflow-hidden">
+    <section id="kalkulator" class="pt-32 pb-48 bg-[#F4F7F6] relative overflow-hidden">
         <div class="relative z-10 reveal-up max-w-7xl mx-auto">
             <div class="text-center mb-12">
                 <h2 class="text-4xl md:text-5xl font-extrabold text-[#171717] tracking-tight mb-4">Mulai Hitung Jejakmu</h2>
@@ -343,58 +394,258 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-white pt-20 pb-8 px-6 lg:px-16 border-t border-gray-100">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-12 mb-16">
-            <!-- Footer Logo & Info -->
-            <div class="w-full md:w-1/3 pr-8">
-                <div class="flex items-center gap-2 mb-6">
-                    <svg class="w-8 h-8 text-[#1A4D2E]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2"/>
-                        <path d="M12 16V12M12 8H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                        <path d="M8 12C8 12 9 8 12 8C15 8 16 12 16 12C16 12 15 16 12 16C9 16 8 12 8 12Z" fill="currentColor"/>
-                    </svg>
-                    <span class="text-2xl font-extrabold text-[#171717]">EcoFlow</span>
-                </div>
-                <p class="text-[#555555] mb-8 leading-relaxed">Platform mitigasi perubahan iklim terpadu untuk individu dan perusahaan. Membantu menghitung, mengurangi, dan mengimbangi jejak karbon.</p>
-                <div class="flex gap-4">
-                    <a href="#" class="w-10 h-10 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-[#171717] hover:bg-[#62F369] hover:border-[#62F369] transition-all"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg></a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-[#171717] hover:bg-[#62F369] hover:border-[#62F369] transition-all"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
-                </div>
-            </div>
-            
-            <div class="w-full md:w-1/4">
-                <h4 class="font-bold text-[#171717] mb-6">Kontak</h4>
-                <div class="space-y-4">
-                    <div>
-                        <p class="text-xs text-gray-400 font-bold uppercase mb-1">Telepon</p>
-                        <a href="#" class="text-[#1A4D2E] font-bold hover:underline">1-800-ECO-FLOW</a>
+    <!-- CTA Offset Section -->
+    <section id="cta-offset" class="py-24 px-6 lg:px-16 bg-white relative overflow-hidden">
+        <div class="max-w-6xl mx-auto reveal-up">
+            <div class="bg-[#1E3F35] rounded-[32px] overflow-hidden shadow-xl border border-[#1E3F35]/15 relative">
+                <!-- Decorative background meshes -->
+                <div class="absolute top-0 right-0 w-80 h-80 bg-[#A3D9A5]/10 rounded-full blur-[80px] pointer-events-none"></div>
+                <div class="absolute bottom-0 left-0 w-80 h-80 bg-[#E67E5D]/5 rounded-full blur-[80px] pointer-events-none"></div>
+                
+                <div class="p-8 md:p-16 flex flex-col lg:flex-row items-center justify-between gap-12 relative z-10">
+                    <!-- Left Column: Content -->
+                    <div class="w-full lg:w-3/5 text-left">
+                        <div class="inline-flex px-3 py-1 rounded-full bg-[#A3D9A5]/25 text-[#A3D9A5] text-xs font-bold uppercase tracking-wider mb-6">
+                            Aksi Pengurangan Emisi
+                        </div>
+                        <h2 class="text-3xl md:text-5xl font-extrabold text-white mb-6 tracking-tight leading-tight">
+                            Bantu Pulihkan Bumi dari Setiap Ton Emisi Anda
+                        </h2>
+                        <p class="text-gray-300 text-base md:text-lg mb-8 leading-relaxed max-w-xl font-medium">
+                            Kompensasikan jejak karbon harian Anda melalui program reboisasi mangrove terverifikasi dan transisi energi terbarukan lokal bersama EcoFlow.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a href="#kalkulator" class="inline-flex items-center justify-center gap-2 bg-[#E67E5D] text-white hover:bg-[#d96d4b] active:scale-[0.98] px-8 py-4 rounded-full font-bold transition-all text-base shadow-lg">
+                                Mulai Aksi Sekarang
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                            </a>
+                            <a href="#tentang-kami" class="inline-flex items-center justify-center gap-2 bg-transparent text-white border border-white/20 hover:bg-white/10 active:scale-[0.98] px-8 py-4 rounded-full font-bold transition-all text-base">
+                                Pelajari Program Offset
+                            </a>
+                        </div>
                     </div>
-                    <div>
-                        <p class="text-xs text-gray-400 font-bold uppercase mb-1">Email</p>
-                        <a href="#" class="text-[#1A4D2E] font-bold hover:underline">hello@ecoflow.id</a>
+
+                    <!-- Right Column: Stats Card -->
+                    <div class="w-full lg:w-2/5">
+                        <div class="bg-white/10 backdrop-blur-md border border-white/10 p-8 rounded-[24px] text-white flex flex-col gap-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]">
+                            <!-- Stat 1: Total Users -->
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-2xl bg-[#A3D9A5]/20 flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-[#A3D9A5]" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                                        <circle cx="9" cy="7" r="4" />
+                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                                    </svg>
+                                </div>
+                                <div class="text-left">
+                                    <p class="text-xs text-gray-400 font-bold uppercase tracking-wider">Total Pengguna</p>
+                                    <h4 class="text-2xl font-bold text-white tracking-tight">{{ $formattedUsers }}</h4>
+                                </div>
+                            </div>
+                            <div class="h-px bg-white/10"></div>
+                            <!-- Stat 2: Total CO2e Reduced -->
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-2xl bg-[#A3D9A5]/20 flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-[#A3D9A5]" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                                    </svg>
+                                </div>
+                                <div class="text-left">
+                                    <p class="text-xs text-gray-400 font-bold uppercase tracking-wider">Total Emisi Dikurangi</p>
+                                    <h4 class="text-2xl font-bold text-white tracking-tight">{{ $formattedSaved }} kg CO₂e</h4>
+                                </div>
+                            </div>
+                            <div class="h-px bg-white/10"></div>
+                            <p class="text-xs text-gray-400 italic text-left">
+                                *Data dinamis terverifikasi real-time berdasarkan pencapaian gamifikasi dan aksi hijau kolektif pengguna EcoFlow.
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="w-full md:w-1/3">
-                <h4 class="font-bold text-[#171717] mb-6">Berlangganan Newsletter</h4>
-                <p class="text-[#555555] mb-6 leading-relaxed">Dapatkan info terbaru seputar iklim, fitur baru, dan tips hijau langsung di inbox kamu.</p>
-                <form class="flex gap-2">
-                    <input type="email" placeholder="Email Anda" class="flex-1 bg-gray-50 border border-gray-200 rounded-[12px] px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#62F369]">
-                    <button type="submit" class="bg-[#171717] hover:bg-[#62F369] hover:text-[#171717] text-white px-6 py-3 rounded-[12px] text-sm font-bold transition-all">Submit</button>
-                </form>
             </div>
         </div>
-        
-        <div class="text-center pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center text-sm text-[#555555]">
-            <p>&copy; {{ date('Y') }} EcoFlow. All rights reserved.</p>
-            <div class="flex gap-6 mt-4 md:mt-0">
-                <a href="#" class="hover:text-[#1A4D2E]">Kebijakan Privasi</a>
-                <a href="#" class="hover:text-[#1A4D2E]">Syarat & Ketentuan</a>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-24 px-6 lg:px-16 bg-[#F8F9FA] relative overflow-hidden border-t border-gray-100">
+        <div class="max-w-6xl mx-auto flex flex-col lg:flex-row gap-12 lg:gap-20">
+            <!-- Left Side header -->
+            <div class="w-full lg:w-1/3 text-left reveal-left">
+                <div class="inline-flex px-3 py-1 rounded-full bg-[#1E3F35]/10 text-[#1E3F35] text-xs font-bold uppercase tracking-wider mb-6">
+                    Pertanyaan Umum
+                </div>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-[#111827] mb-6 tracking-tight leading-tight">
+                    Memahami Metodologi Kami
+                </h2>
+                <p class="text-[#4B5563] text-base leading-relaxed font-medium">
+                    Kalkulator EcoFlow dirancang agar transparan dan berbasis sains. Hubungi kami jika Anda memiliki pertanyaan teknis lebih lanjut.
+                </p>
+            </div>
+
+            <!-- Right Side Accordion -->
+            <div class="w-full lg:w-2/3 reveal-right flex flex-col divide-y divide-gray-100">
+                <!-- FAQ Item 1 -->
+                <div class="py-5">
+                    <button class="faq-trigger w-full flex justify-between items-center text-left font-bold text-lg text-[#111827] py-2 focus:outline-none transition-colors hover:text-[#1E3F35]">
+                        <span>Bagaimana EcoFlow menghitung jejak karbon saya?</span>
+                        <svg class="faq-icon w-5 h-5 text-[#4B5563] transition-transform duration-300 transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-panel max-h-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out">
+                        <p class="text-[#4B5563] text-sm md:text-base leading-relaxed pt-2 pb-4 font-medium">
+                            Kalkulator kami menggunakan parameter ilmiah dari <strong>IPCC 2006/2019 Guidelines for National Greenhouse Gas Inventories</strong>. Kami mengalikan jumlah konsumsi harian Anda dengan faktor emisi lokal seperti data Kementerian ESDM RI untuk emisi listrik PLN (~0.87 kg CO₂/kWh) serta riset Poore & Nemecek (2018) untuk emisi siklus hidup bahan makanan.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="py-5">
+                    <button class="faq-trigger w-full flex justify-between items-center text-left font-bold text-lg text-[#111827] py-2 focus:outline-none transition-colors hover:text-[#1E3F35]">
+                        <span>Apakah data aktivitas yang saya masukkan aman?</span>
+                        <svg class="faq-icon w-5 h-5 text-[#4B5563] transition-transform duration-300 transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-panel max-h-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out">
+                        <p class="text-[#4B5563] text-sm md:text-base leading-relaxed pt-2 pb-4 font-medium">
+                            Tentu saja. Perhitungan kalkulator karbon berjalan secara lokal di peramban Anda. Kami hanya menyimpan ringkasan emisi di database kami jika Anda terdaftar dan masuk ke akun Anda, semata-mata untuk menampilkan bagan tren perkembangan emisi Anda dari waktu ke waktu.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="py-5">
+                    <button class="faq-trigger w-full flex justify-between items-center text-left font-bold text-lg text-[#111827] py-2 focus:outline-none transition-colors hover:text-[#1E3F35]">
+                        <span>Mengapa emisi dari makanan hewani cenderung sangat tinggi?</span>
+                        <svg class="faq-icon w-5 h-5 text-[#4B5563] transition-transform duration-300 transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-panel max-h-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out">
+                        <p class="text-[#4B5563] text-sm md:text-base leading-relaxed pt-2 pb-4 font-medium">
+                            Daging sapi dan produk ternak ruminansia menghasilkan gas metana (CH₄) melalui proses fermentasi enterik selama pencernaan mereka. Metana memiliki dampak pemanasan global 28 kali lebih kuat dibanding karbon dioksida (CO₂) dalam jangka 100 tahun. Selain itu, budidaya ternak juga membutuhkan konversi lahan hutan yang signifikan, yang melipatgandakan emisi karbonnya.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="py-5">
+                    <button class="faq-trigger w-full flex justify-between items-center text-left font-bold text-lg text-[#111827] py-2 focus:outline-none transition-colors hover:text-[#1E3F35]">
+                        <span>Bagaimana cara kerja Carbon Offsetting di platform ini?</span>
+                        <svg class="faq-icon w-5 h-5 text-[#4B5563] transition-transform duration-300 transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-panel max-h-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out">
+                        <p class="text-[#4B5563] text-sm md:text-base leading-relaxed pt-2 pb-4 font-medium">
+                            Setiap pohon mangrove yang Anda kompensasikan ditanam oleh mitra konservasi lokal bersertifikat kami di Indonesia. Kami merekam titik koordinat pohon, foto pemantauan pertumbuhan berkala, dan mengonversikan potensi serapan karbonnya untuk dikreditkan langsung ke profil pelacakan karbon Anda di dashboard EcoFlow.
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
-    </footer>
+    </section>
+
+    <!-- Animated Footer Section -->
+    <section class="relative w-full mt-0 overflow-hidden">
+        <footer class="border-t bg-[#FAFAFA] mt-20 relative">
+            <div class="max-w-7xl flex flex-col justify-between mx-auto min-h-[30rem] sm:min-h-[35rem] md:min-h-[40rem] relative p-4 py-10">
+                
+                <!-- Main Content -->
+                <div class="flex flex-col mb-12 sm:mb-20 md:mb-0 w-full relative z-20">
+                    <div class="w-full flex flex-col items-center">
+                        <div class="space-y-2 flex flex-col items-center flex-1">
+                            <div class="flex items-center gap-2">
+                                <span class="text-[#1E3F35] text-3xl sm:text-4xl font-extrabold tracking-tight">
+                                    EcoFlow
+                                </span>
+                            </div>
+                            <p class="text-[#555555] font-semibold text-center w-full max-w-sm sm:w-96 px-4 sm:px-0 mt-2">
+                                Platform analisis dan mitigasi perubahan iklim terpadu. Membantu menghitung, mengurangi, dan mengimbangi jejak karbon harian Anda.
+                            </p>
+                        </div>
+
+                        <!-- Social Links -->
+                        <div class="flex mb-8 mt-6 gap-5">
+                            <!-- Twitter -->
+                            <a href="https://twitter.com" class="text-gray-400 hover:text-[#1E3F35] transition-colors" target="_blank" rel="noopener noreferrer">
+                                <div class="w-6 h-6 hover:scale-110 duration-300">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                                </div>
+                                <span class="sr-only">Twitter</span>
+                            </a>
+                            <!-- LinkedIn -->
+                            <a href="https://linkedin.com" class="text-gray-400 hover:text-[#1E3F35] transition-colors" target="_blank" rel="noopener noreferrer">
+                                <div class="w-6 h-6 hover:scale-110 duration-300">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                                </div>
+                                <span class="sr-only">LinkedIn</span>
+                            </a>
+                            <!-- GitHub -->
+                            <a href="https://github.com" class="text-gray-400 hover:text-[#1E3F35] transition-colors" target="_blank" rel="noopener noreferrer">
+                                <div class="w-6 h-6 hover:scale-110 duration-300">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C19.138 20.193 22 16.44 22 12.017 22 6.484 17.522 2 12 2z"/></svg>
+                                </div>
+                                <span class="sr-only">GitHub</span>
+                            </a>
+                            <!-- Email -->
+                            <a href="mailto:hello@ecoflow.id" class="text-gray-400 hover:text-[#1E3F35] transition-colors">
+                                <div class="w-6 h-6 hover:scale-110 duration-300">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>
+                                </div>
+                                <span class="sr-only">Email</span>
+                            </a>
+                        </div>
+
+                        <!-- Navigation Links -->
+                        <div class="flex flex-wrap justify-center gap-6 text-sm font-semibold text-gray-500 max-w-full px-4">
+                            <a href="#beranda" class="hover:text-[#1E3F35] duration-300 hover:font-bold">Beranda</a>
+                            <a href="#tentang-kami" class="hover:text-[#1E3F35] duration-300 hover:font-bold">Tentang Kami</a>
+                            <a href="#kalkulator" class="hover:text-[#1E3F35] duration-300 hover:font-bold">Kalkulator</a>
+                            <a href="#cta-offset" class="hover:text-[#1E3F35] duration-300 hover:font-bold">Aksi Hijau</a>
+                            <a href="#faq" class="hover:text-[#1E3F35] duration-300 hover:font-bold">FAQ</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Copyright Area -->
+                <div class="mt-20 md:mt-24 flex flex-col gap-4 items-center justify-center md:flex-row md:items-center md:justify-between px-4 md:px-0 relative z-20 border-t border-gray-200/50 pt-8 text-sm">
+                    <p class="text-gray-400 text-center md:text-left">
+                        ©{{ date('Y') }} EcoFlow. All rights reserved.
+                    </p>
+                    <div class="flex flex-col md:flex-row gap-4 md:gap-8 items-center">
+                        <nav class="flex gap-6">
+                            <a href="#" class="text-sm text-gray-400 hover:text-[#1E3F35] transition-colors duration-300 font-medium">
+                                Kebijakan Privasi
+                            </a>
+                            <a href="#" class="text-sm text-gray-400 hover:text-[#1E3F35] transition-colors duration-300 font-medium">
+                                Syarat & Ketentuan
+                            </a>
+                        </nav>
+                       
+                    </div>
+                </div>
+            </div>
+
+            <!-- Large Background Text (ECOFLOW) -->
+            <div 
+                class="bg-gradient-to-b from-[#1E3F35]/15 via-[#1E3F35]/5 to-transparent bg-clip-text text-transparent leading-none absolute left-1/2 -translate-x-1/2 bottom-40 md:bottom-32 font-extrabold tracking-tighter pointer-events-none select-none text-center px-4"
+                style="font-size: clamp(3rem, 12vw, 10rem); max-width: 95vw;"
+            >
+                ECOFLOW
+            </div>
+
+
+
+            <!-- Bottom Line divider -->
+            <div class="absolute bottom-32 sm:bottom-34 backdrop-blur-sm h-1 bg-gradient-to-r from-transparent via-gray-200/60 to-transparent w-full left-1/2 -translate-x-1/2"></div>
+
+            <!-- Bottom Shadow / fade out -->
+            <div class="bg-gradient-to-t from-[#FAFAFA] via-[#FAFAFA]/80 blur-[1em] to-[#FAFAFA]/40 absolute bottom-28 w-full h-24 pointer-events-none"></div>
+        </footer>
+    </section>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -412,20 +663,20 @@
             revealElements.forEach(el => revealObserver.observe(el));
 
             // Scroll spy for navbar active state
-            const sections = document.querySelectorAll('#beranda, #tentang-kami, #kalkulator, #product-duel');
+            const sections = document.querySelectorAll('#beranda, #tentang-kami, #kalkulator, #cta-offset, #faq');
             const navLinks = document.querySelectorAll('#nav-links .nav-link');
             
-            const activeClasses = ['text-[#1A4D2E]', 'relative', 'after:absolute', 'after:bottom-[-4px]', 'after:left-0', 'after:w-full', 'after:h-[2px]', 'after:bg-[#62F369]', 'after:rounded-full'];
+            const activeClasses = ['text-[#1E3F35]', 'relative', 'after:absolute', 'after:bottom-[-4px]', 'after:left-0', 'after:w-full', 'after:h-[2px]', 'after:bg-[#A3D9A5]', 'after:rounded-full'];
             
             function changeActiveLink(id) {
                 navLinks.forEach(link => {
                     const href = link.getAttribute('href');
                     if (href === `#${id}`) {
                         link.classList.add(...activeClasses);
-                        link.classList.remove('hover:text-[#1A4D2E]', 'transition-colors');
+                        link.classList.remove('hover:text-[#1E3F35]', 'transition-colors');
                     } else {
                         link.classList.remove(...activeClasses);
-                        link.classList.add('hover:text-[#1A4D2E]', 'transition-colors');
+                        link.classList.add('hover:text-[#1E3F35]', 'transition-colors');
                     }
                 });
             }
@@ -448,11 +699,113 @@
                 if (section) sectionObserver.observe(section);
             });
 
+            // Scroll Expansion Hero & Navbar Reveal Logic
+            const heroMediaContainer = document.getElementById('hero-media-container');
+            const heroBgImage = document.getElementById('hero-bg-image');
+            const titleFirst = document.getElementById('hero-title-first');
+            const titleRest = document.getElementById('hero-title-rest');
+            const scrollMarker = document.getElementById('hero-scroll-marker');
+            const expandedContent = document.getElementById('hero-expanded-content');
+            
+            const navbarContainer = document.getElementById('floating-navbar-container');
+            const navbar = document.getElementById('floating-navbar');
+            const navbarContent = document.getElementById('navbar-content');
+
+            function handleScrollExpand() {
+                if (!heroMediaContainer) return;
+                
+                const progress = Math.min(window.scrollY / window.innerHeight, 1);
+                const isMobile = window.innerWidth < 768;
+                const startWidth = isMobile ? 240 : 350;
+                const startHeight = isMobile ? 320 : 450;
+                const endWidth = window.innerWidth;
+                const endHeight = window.innerHeight;
+
+                const currentWidth = startWidth + progress * (endWidth - startWidth);
+                const currentHeight = startHeight + progress * (endHeight - startHeight);
+                const currentRadius = 24 - progress * 24;
+
+                // 1. Update media container size & border radius
+                heroMediaContainer.style.width = currentWidth + 'px';
+                heroMediaContainer.style.height = currentHeight + 'px';
+                heroMediaContainer.style.borderRadius = currentRadius + 'px';
+
+                // 2. Background image opacity fade out
+                if (heroBgImage) {
+                    heroBgImage.style.opacity = 1 - progress;
+                }
+
+                // 3. Titles slide out horizontally
+                const textTranslateX = progress * 150;
+                if (titleFirst) {
+                    titleFirst.style.transform = 'translateX(-' + textTranslateX + 'vw)';
+                }
+                if (titleRest) {
+                    titleRest.style.transform = 'translateX(' + textTranslateX + 'vw)';
+                }
+
+                // 4. Scroll marker fade out
+                if (scrollMarker) {
+                    scrollMarker.style.opacity = Math.max(0, 1 - progress * 2.5);
+                }
+
+                // 5. Fade-in expanded content
+                if (expandedContent) {
+                    if (progress >= 0.95) {
+                        expandedContent.classList.remove('opacity-0', 'pointer-events-none');
+                        expandedContent.classList.add('opacity-100');
+                    } else {
+                        expandedContent.classList.remove('opacity-100');
+                        expandedContent.classList.add('opacity-0', 'pointer-events-none');
+                    }
+                }
+
+                // 6. Navbar Transition (Center-out expansion)
+                if (navbarContainer && navbar && navbarContent) {
+                    if (progress >= 0.98) {
+                        // Reveal container
+                        navbarContainer.classList.remove('opacity-0', '-translate-y-12', 'scale-95', 'pointer-events-none');
+                        
+                        // Expand navbar horizontally from center
+                        navbar.style.width = '100%';
+                        navbar.style.maxWidth = '72rem'; // max-w-6xl is 72rem (1152px)
+                        navbar.classList.remove('w-[60px]', 'opacity-0');
+                        
+                        // Fade in inner content
+                        setTimeout(() => {
+                            const currentProgress = Math.min(window.scrollY / window.innerHeight, 1);
+                            if (currentProgress >= 0.98) {
+                                navbarContent.classList.remove('opacity-0', 'pointer-events-none');
+                                navbarContent.classList.add('opacity-100');
+                            }
+                        }, 200);
+                    } else {
+                        // Immediately hide content to prevent overlap
+                        navbarContent.classList.remove('opacity-100');
+                        navbarContent.classList.add('opacity-0', 'pointer-events-none');
+                        
+                        // Shrink navbar back to narrow state
+                        navbar.style.width = '60px';
+                        navbar.style.maxWidth = '';
+                        navbar.classList.add('opacity-0');
+                        
+                        // Hide container
+                        navbarContainer.classList.add('opacity-0', '-translate-y-12', 'scale-95', 'pointer-events-none');
+                    }
+                }
+            }
+
             window.addEventListener('scroll', () => {
                 if (window.scrollY === 0) {
                     changeActiveLink('beranda');
                 }
+                handleScrollExpand();
             });
+
+            window.addEventListener('resize', handleScrollExpand);
+            
+            // Initial call to set positions on page load
+            handleScrollExpand();
 
             // Slider Logic
             const slides = document.getElementById('slides');
@@ -535,6 +888,39 @@
                     cursorLabel.classList.remove('scale-95');
                 });
             }
+
+            // FAQ Accordion Logic
+            const faqTriggers = document.querySelectorAll('.faq-trigger');
+            faqTriggers.forEach(trigger => {
+                trigger.addEventListener('click', () => {
+                    const panel = trigger.nextElementSibling;
+                    const icon = trigger.querySelector('.faq-icon');
+                    
+                    // Toggle current panel
+                    if (panel.style.maxHeight) {
+                        panel.style.maxHeight = null;
+                        panel.style.opacity = '0';
+                        icon?.classList.remove('rotate-180');
+                        trigger.classList.remove('text-[#1E3F35]');
+                        trigger.classList.add('text-[#111827]');
+                    } else {
+                        // Close other panels first
+                        document.querySelectorAll('.faq-panel').forEach(p => {
+                            p.style.maxHeight = null;
+                            p.style.opacity = '0';
+                            p.previousElementSibling.querySelector('.faq-icon')?.classList.remove('rotate-180');
+                            p.previousElementSibling.classList.remove('text-[#1E3F35]');
+                            p.previousElementSibling.classList.add('text-[#111827]');
+                        });
+                        
+                        panel.style.maxHeight = panel.scrollHeight + "px";
+                        panel.style.opacity = '1';
+                        icon?.classList.add('rotate-180');
+                        trigger.classList.remove('text-[#111827]');
+                        trigger.classList.add('text-[#1E3F35]');
+                    }
+                });
+            });
         });
     </script>
 
@@ -542,12 +928,12 @@
     <div id="custom-cursor" class="fixed top-0 left-0 pointer-events-none z-[9999] hidden md:block">
         <div class="relative">
             <!-- Arrow SVG -->
-            <svg id="cursor-svg" class="absolute w-10 h-10 drop-shadow-md z-10 transition-transform duration-100 origin-top-left" style="top: 0; left: 0;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg id="cursor-svg" class="absolute w-[28px] h-[29px] drop-shadow-md z-10 transition-transform duration-100 origin-top-left" style="top: 0; left: 0;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M1 1 L16 7 L9 9 L6 17 Z" fill="#12A150" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
             </svg>
             
-            <!-- Label -->
-            <div id="cursor-label" class="absolute top-8 left-6 px-5 py-2.5 bg-[#12A150] text-white text-sm font-bold rounded-xl whitespace-nowrap shadow-md transition-transform duration-100 origin-top-left">
+            <!-- Label (Ribbon) -->
+            <div id="cursor-label" class="absolute top-6 left-5 h-[25px] flex items-center justify-center px-3 bg-[#12A150] text-white text-xs font-bold rounded-lg whitespace-nowrap shadow-md transition-transform duration-100 origin-top-left">
                 Sustainability Hero
             </div>
         </div>
