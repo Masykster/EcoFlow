@@ -422,3 +422,135 @@ body, * {
     align-items: center;
     gap: var(--eco-space-sm);
 }
+
+/* ============================================================
+   Dark Mode Overrides for Dark Green Glassmorphic Aesthetic
+   ============================================================ */
+.dark {
+    --eco-bg: #090f0d;
+    --eco-card: rgba(20, 29, 25, 0.45);
+    --eco-overlay: rgba(163, 217, 165, 0.08);
+    --eco-text-primary: #FFFFFF;
+    --eco-text-secondary: rgba(255, 255, 255, 0.6);
+    --eco-primary: #A3D9A5; /* Light green headings */
+    --eco-primary-light: #c3f0c5;
+}
+
+.dark .bento-card,
+.dark .eco-input-card,
+.dark .eco-history-item,
+.dark .eco-insight-badge {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--eco-card);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+}
+
+.dark .eco-history-item:hover,
+.dark .bento-card:hover {
+    border-color: rgba(163, 217, 165, 0.3);
+    box-shadow: 0 8px 32px rgba(163, 217, 165, 0.05);
+}
+
+.dark .eco-input-field {
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    background: #090f0d;
+    color: #FFFFFF;
+}
+
+.dark .eco-input-field:focus {
+    border-color: var(--eco-primary);
+    background: #0c1410;
+}
+
+.dark .eco-btn-primary {
+    background: var(--eco-secondary);
+    color: #0c1410 !important;
+}
+
+.dark .eco-btn-primary:hover {
+    background: #c3f0c5;
+}
+
+.dark .eco-btn-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    color: #A3D9A5;
+    border: 2px solid rgba(163, 217, 165, 0.3);
+}
+
+.dark .eco-btn-secondary:hover {
+    background: rgba(163, 217, 165, 0.1);
+}
+
+.dark select.eco-input-field option {
+    background: #0c1410;
+    color: #FFFFFF;
+}
+
+/* Global Utility Overrides for Dark Mode Compatibility */
+.dark .bg-white {
+    background-color: rgba(20, 29, 25, 0.45) !important;
+    backdrop-filter: blur(8px);
+}
+.dark .border-gray-100,
+.dark .border-gray-200 {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+.dark .text-gray-900,
+.dark .text-gray-800 {
+    color: #FFFFFF !important;
+}
+.dark .text-gray-700 {
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+.dark .text-gray-600,
+.dark .text-gray-500 {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+.dark .text-gray-400 {
+    color: rgba(255, 255, 255, 0.45) !important;
+}
+.dark .bg-gray-50 {
+    background-color: #0c1410 !important;
+}
+.dark select {
+    background-color: #0c1410 !important;
+    color: #FFFFFF !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+.dark input[type="number"],
+.dark input[type="text"],
+.dark input[type="date"] {
+    background-color: #0c1410 !important;
+    color: #FFFFFF !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+.dark .bg-\[\#EAF3EB\] {
+    background-color: rgba(163, 217, 165, 0.05) !important;
+    border-color: rgba(163, 217, 165, 0.2) !important;
+}
+.dark .text-\[\#2D5F50\] {
+    color: #A3D9A5 !important;
+}
+.dark .eco-insight-badge.locked .eco-badge {
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.dark .bg-green-50 {
+    background-color: rgba(163, 217, 165, 0.05) !important;
+    border-color: rgba(163, 217, 165, 0.2) !important;
+}
+.dark .text-green-800,
+.dark .text-green-700,
+.dark .text-green-600 {
+    color: #A3D9A5 !important;
+}
+.dark .text-red-500 {
+    color: #EF4444 !important;
+}
+.dark .text-red-700 {
+    color: #ff6b6b !important;
+}
+
+

@@ -1,4 +1,4 @@
-<div class="p-6 max-w-6xl mx-auto" x-data="calculatorChart">
+<div class="p-6 max-w-6xl mx-auto">
 
     <div>
         <h1 class="text-3xl font-bold text-gray-900">Kalkulator Jejak Karbon</h1>
@@ -282,10 +282,7 @@
                 </p>
             </div>
 
-            {{-- Dynamic Bar Chart Comparison --}}
-            <div class="h-40 w-full relative mb-6">
-                <canvas id="comparisonChart" wire:ignore></canvas>
-            </div>
+
 
             {{-- Feature 3: Realistic Impact Analogies --}}
             <div class="bg-[#F9FAFB] p-4 rounded-[20px] border border-gray-100 space-y-3">
@@ -442,74 +439,4 @@
     </div>
 </div>
 
-<script>
-document.addEventListener('alpine:init', () => {
-    Alpine.data('calculatorChart', () => ({
-        chart: null,
-        
-        init() {
-            setTimeout(() => this.renderChart(), 100);
-            
-            // Watch for livewire updates to previewCo2e
-            if (this.$wire) {
-                this.$watch('$wire.previewCo2e', () => {
-                    this.updateChart();
-                });
-            }
-        },
 
-        renderChart() {
-            const ctx = document.getElementById('comparisonChart');
-            if(!ctx || !window.Chart) return;
-            
-            // Initial data
-            const val = parseFloat(this.$wire.get('previewCo2e')) || 0;
-            const treeEq = val * 0.5; // Visual ratio
-            const carEq = val * 0.8;  // Visual ratio
-
-            this.chart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Emisi', 'Pohon (10x)', 'Mobil'],
-                    datasets: [{
-                        data: [val, treeEq, carEq],
-                        backgroundColor: ['#2D5F50', '#A3D9A5', '#CBD5E1'],
-                        borderRadius: 20,
-                        barPercentage: 0.6
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: { enabled: false }
-                    },
-                    scales: {
-                        y: { display: false, beginAtZero: true },
-                        x: { 
-                            grid: { display: false },
-                            border: { display: false }
-                        }
-                    },
-                    animation: {
-                        duration: 500
-                    }
-                }
-            });
-        },
-
-        updateChart() {
-            if(!this.chart) return;
-            const val = parseFloat(this.$wire.get('previewCo2e')) || 0;
-            
-            // Artificial scaling for visual comparison
-            let treeEq = val * 0.5; 
-            let carEq = val * 0.8;
-            
-            this.chart.data.datasets[0].data = [val, treeEq, carEq];
-            this.chart.update();
-        }
-    }));
-});
-</script>

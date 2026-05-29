@@ -240,46 +240,172 @@
     </section>
 
     <!-- Features Section -->
-    <section class="py-32 px-6 lg:px-16 bg-[#0F211C] text-white text-center relative overflow-hidden">
-        <!-- Abstract Dark Shapes -->
-        <div class="absolute top-0 right-0 w-96 h-96 bg-[#1E3F35]/40 rounded-full blur-[100px] pointer-events-none"></div>
-        <div class="absolute bottom-0 left-0 w-96 h-96 bg-[#A3D9A5]/10 rounded-full blur-[100px] pointer-events-none"></div>
+    <section class="py-32 px-6 lg:px-16 bg-[#F9FAFB] text-[#171717] text-center relative overflow-hidden">
+        <!-- Abstract Shapes -->
+        <div class="absolute top-0 right-0 w-96 h-96 bg-[#A3D9A5]/10 rounded-full blur-[100px] pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-[#1E3F35]/5 rounded-full blur-[100px] pointer-events-none"></div>
         
         <div class="max-w-7xl mx-auto relative z-10">
-            <div class="inline-flex px-3 py-1 rounded-full bg-white/10 text-[#A3D9A5] text-xs font-bold uppercase tracking-wider mb-6 reveal-up border border-white/10">
-                Fitur Utama
+            <!-- Pill -->
+            <div class="inline-flex px-4 py-1.5 rounded-full bg-[#1E3F35]/10 text-[#1E3F35] text-xs font-black uppercase tracking-wider mb-6 reveal-up border border-[#1E3F35]/10">
+                Aksi Hijau
             </div>
-            <h2 class="text-4xl md:text-5xl font-extrabold mb-6 reveal-up">Fitur Andal untuk Aksi Hijau</h2>
-            <p class="text-gray-400 mb-20 max-w-2xl mx-auto text-lg reveal-up delay-100 font-medium">Platform komprehensif yang didesain secara khusus untuk memudahkan kamu dalam mengelola, memantau, dan menurunkan jejak karbon.</p>
+            <h2 class="text-4xl md:text-5xl font-black text-[#171717] mb-6 reveal-up tracking-tight">
+                Mulai Aksi Hijau Kamu Dalam 3 Langkah Mudah
+            </h2>
+            <p class="text-gray-500 mb-20 max-w-2xl mx-auto text-lg reveal-up delay-100 font-medium">
+                Platform komprehensif yang didesain secara khusus untuk memudahkan kamu dalam mengelola, memantau, dan menurunkan jejak karbon.
+            </p>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div class="bg-[#142C25] border border-[#1E3F35]/40 p-10 rounded-[24px] text-left hover-lift reveal-up delay-100 transition-all duration-300">
-                    <div class="w-14 h-14 bg-[#1E3F35] rounded-[16px] mb-8 flex items-center justify-center">
-                        <svg class="w-7 h-7 text-[#A3D9A5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            <!-- Asymmetric Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                
+                <!-- Step 1: Purple Card -->
+                <div class="bg-[#8778f5] text-white p-8 md:p-10 rounded-[2.5rem] text-left flex flex-col justify-between overflow-hidden relative group reveal-left" style="min-height: 480px;">
+                    <div>
+                        <div class="inline-block px-3 py-1 rounded-full bg-white/20 text-white text-[10px] font-bold uppercase tracking-wider mb-6">
+                            Langkah 1
+                        </div>
+                        <h3 class="text-2xl md:text-3xl font-black mb-4 tracking-tight leading-tight">
+                            Kalkulasi Presisi Emisi Harian
+                        </h3>
+                        <p class="text-white/80 text-sm md:text-base leading-relaxed mb-8 max-w-[45ch]">
+                            Hitung emisi CO2e dari transportasi hingga konsumsi makanan secara akurat menggunakan metodologi IPCC & DEFRA yang diakui dunia.
+                        </p>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4">Kalkulasi Presisi</h3>
-                    <p class="text-gray-400 mb-8 leading-relaxed">Hitung emisi CO2e dari transportasi hingga konsumsi makanan secara akurat menggunakan metodologi IPCC yang diakui dunia.</p>
+
+                    <!-- CSS Mock UI: Floating Calculator Card -->
+                    <div class="relative w-full h-48 mt-auto flex items-end justify-center">
+                        <div class="bg-white text-[#171717] rounded-3xl p-5 shadow-2xl border border-white/10 w-full max-w-[340px] transform translate-y-4 group-hover:-translate-y-2 transition-transform duration-500 relative z-10 text-left">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="px-2.5 py-0.5 rounded-full text-[9px] font-bold bg-[#EAF3EB] text-[#2D5F50]">Kalkulator Aktif</span>
+                                <div class="flex gap-1">
+                                    <div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div>
+                                    <div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div>
+                                    <div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div>
+                                </div>
+                            </div>
+                            <span class="block text-[8px] font-bold text-gray-400 uppercase tracking-widest leading-none">Bahan Bakar</span>
+                            <span class="block text-sm font-black text-gray-800 mt-1 leading-none">Pertalite - 10 Liter</span>
+                            
+                            <!-- Result Box -->
+                            <div class="mt-4 p-3 bg-gray-50 rounded-2xl border border-gray-100 flex justify-between items-center">
+                                <div>
+                                    <span class="text-[7px] font-bold text-gray-400 uppercase tracking-wider block">Estimasi emisi</span>
+                                    <span class="text-lg font-black text-[#2D5F50] leading-none block mt-1">22.50 kg CO₂e</span>
+                                </div>
+                                <div class="flex -space-x-1.5">
+                                    <div class="w-5 h-5 rounded-full bg-[#1E3F35] text-[6px] font-bold text-white flex items-center justify-center border border-white">AM</div>
+                                    <div class="w-5 h-5 rounded-full bg-[#A3D9A5] text-[6px] font-bold text-[#1E3F35] flex items-center justify-center border border-white">CF</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
-                <!-- Feature 2 -->
-                <div class="bg-[#142C25] border border-[#1E3F35]/40 p-10 rounded-[24px] text-left hover-lift reveal-up delay-200 transition-all duration-300">
-                    <div class="w-14 h-14 bg-[#1E3F35] rounded-[16px] mb-8 flex items-center justify-center">
-                        <svg class="w-7 h-7 text-[#A3D9A5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                <!-- Step 2: Yellow/Gold Card -->
+                <div class="bg-[#f5c35b] text-[#1E3F35] p-8 md:p-10 rounded-[2.5rem] text-left flex flex-col justify-between overflow-hidden relative group reveal-right" style="min-height: 480px;">
+                    <div>
+                        <div class="inline-block px-3 py-1 rounded-full bg-[#1E3F35]/15 text-[#1E3F35] text-[10px] font-bold uppercase tracking-wider mb-6">
+                            Langkah 2
+                        </div>
+                        <h3 class="text-2xl md:text-3xl font-black mb-4 tracking-tight leading-tight">
+                            Analitik Personal & Pemantauan
+                        </h3>
+                        <p class="text-[#1E3F35]/80 text-sm md:text-base leading-relaxed mb-8 max-w-[45ch]">
+                            Pantau riwayat emisi mingguan dan bulanan kamu melalui dashboard bento-grid yang dirancang untuk memudahkan pemantauan progres.
+                        </p>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4">Analitik Personal</h3>
-                    <p class="text-gray-400 mb-8 leading-relaxed">Pantau riwayat emisi mingguan dan bulanan kamu melalui dashboard bento-grid yang dirancang untuk memudahkan pemantauan progres.</p>
-                </div>
-                
-                <!-- Feature 3 -->
-                <div class="bg-[#142C25] border border-[#1E3F35]/40 p-10 rounded-[24px] text-left hover-lift reveal-up delay-300 transition-all duration-300">
-                    <div class="w-14 h-14 bg-[#1E3F35] rounded-[16px] mb-8 flex items-center justify-center">
-                        <svg class="w-7 h-7 text-[#A3D9A5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+
+                    <!-- CSS Mock UI: Floating Dashboard Card -->
+                    <div class="relative w-full h-48 mt-auto flex items-end justify-center">
+                        <div class="bg-white text-[#171717] rounded-3xl p-5 shadow-2xl border border-white/10 w-full max-w-[340px] transform translate-y-4 group-hover:-translate-y-2 transition-transform duration-500 relative z-10 text-left">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-xs font-black text-gray-800 leading-none">Batas Emisi Bulanan</span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            </div>
+                            
+                            <!-- Progress Bar -->
+                            <div class="w-full bg-gray-100 rounded-full h-2 mb-2">
+                                <div class="bg-emerald-500 h-2 rounded-full" style="width: 65%;"></div>
+                            </div>
+                            <div class="flex justify-between text-[8px] font-bold text-gray-400">
+                                <span>650 kg Terpakai</span>
+                                <span>1000 kg Limit</span>
+                            </div>
+
+                            <!-- Color tags / categories -->
+                            <div class="mt-4 flex gap-1.5">
+                                <div class="w-4 h-4 rounded-full bg-emerald-500/20 border border-emerald-500 flex items-center justify-center">
+                                    <div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+                                </div>
+                                <div class="w-4 h-4 rounded-full bg-amber-500/20 border border-amber-500 flex items-center justify-center">
+                                    <div class="w-1.5 h-1.5 rounded-full bg-amber-500"></div>
+                                </div>
+                                <div class="w-4 h-4 rounded-full bg-blue-500/20 border border-blue-500 flex items-center justify-center">
+                                    <div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
+                                </div>
+                                <span class="text-[8px] font-bold text-gray-400 self-center ml-1">Saran AI: Matikan lampu siang hari</span>
+                            </div>
+                        </div>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4">Aksi & Penghargaan</h3>
-                    <p class="text-gray-400 mb-8 leading-relaxed">Dapatkan tips ramah lingkungan yang dipersonalisasi dan raih badge eksklusif sebagai apresiasi atas kontribusi hijaumu.</p>
                 </div>
             </div>
+
+            <!-- Step 3: Lime Green Wide Card -->
+            <div class="bg-[#a8f387] text-[#1E3F35] p-8 md:p-12 rounded-[2.5rem] text-left reveal-up overflow-hidden relative group">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    
+                    <!-- Left Content Column -->
+                    <div class="lg:col-span-7 flex flex-col justify-between h-full">
+                        <div>
+                            <div class="inline-block px-3 py-1 rounded-full bg-[#1E3F35]/15 text-[#1E3F35] text-[10px] font-bold uppercase tracking-wider mb-6">
+                                Langkah 3
+                            </div>
+                            <h3 class="text-3xl md:text-4xl font-black mb-4 tracking-tight leading-tight">
+                                Aksi Nyata & Raih Penghargaan
+                            </h3>
+                            <p class="text-[#1E3F35]/80 text-sm md:text-base leading-relaxed mb-8 max-w-[50ch]">
+                                Dapatkan tips ramah lingkungan yang dipersonalisasi dan raih badge eksklusif sebagai apresiasi atas kontribusi hijaumu.
+                            </p>
+                        </div>
+                        
+                        <div>
+                            <a href="{{ route('calculator') }}" class="inline-flex bg-[#171717] hover:bg-[#262626] active:scale-[0.98] active:translate-y-0.5 text-white text-xs font-bold py-3.5 px-7 rounded-full shadow-lg transition-all tracking-wider uppercase leading-none">
+                                Mulai Sekarang
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Right CSS Mockup Visual Column -->
+                    <div class="lg:col-span-5 flex justify-center items-center relative min-h-[220px]">
+                        
+                        <!-- Floating Badge Card 1 -->
+                        <div class="absolute bg-white text-[#171717] rounded-3xl p-4 shadow-xl border border-white/10 w-44 transform -translate-x-12 -translate-y-4 -rotate-6 group-hover:-translate-y-8 transition-transform duration-500 z-10">
+                            <div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center mb-2 mx-auto">
+                                <svg class="w-6 h-6 text-emerald-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                                </svg>
+                            </div>
+                            <span class="block text-xs font-black text-center text-gray-800">Pejuang MRT</span>
+                            <span class="block text-[8px] font-semibold text-center text-emerald-600 mt-1 leading-none bg-emerald-50 px-2 py-0.5 rounded-full w-fit mx-auto border border-emerald-100">Diraih</span>
+                        </div>
+
+                        <!-- Floating Badge Card 2 -->
+                        <div class="absolute bg-white text-[#171717] rounded-3xl p-4 shadow-xl border border-white/10 w-44 transform translate-x-12 translate-y-6 rotate-6 group-hover:translate-y-2 transition-transform duration-500 z-20">
+                            <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center mb-2 mx-auto">
+                                <svg class="w-6 h-6 text-amber-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18M12 3C8.5 7 5.5 11 5.5 15c0 3.5 2.5 6 6.5 6m0-18c3.5 4 6.5 8 6.5 12 0 3.5-2.5 6-6.5 6" />
+                                </svg>
+                            </div>
+                            <span class="block text-xs font-black text-center text-gray-800">Carbon Fighter</span>
+                            <span class="block text-[8px] font-semibold text-center text-amber-600 mt-1 leading-none bg-amber-50 px-2 py-0.5 rounded-full w-fit mx-auto border border-amber-100">Diraih</span>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
         </div>
     </section>
 
@@ -395,74 +521,85 @@
     </section>
 
     <!-- CTA Offset Section -->
-    <section id="cta-offset" class="py-24 px-6 lg:px-16 bg-white relative overflow-hidden">
-        <div class="max-w-6xl mx-auto reveal-up">
-            <div class="bg-[#1E3F35] rounded-[32px] overflow-hidden shadow-xl border border-[#1E3F35]/15 relative">
-                <!-- Decorative background meshes -->
-                <div class="absolute top-0 right-0 w-80 h-80 bg-[#A3D9A5]/10 rounded-full blur-[80px] pointer-events-none"></div>
-                <div class="absolute bottom-0 left-0 w-80 h-80 bg-[#E67E5D]/5 rounded-full blur-[80px] pointer-events-none"></div>
-                
-                <div class="p-8 md:p-16 flex flex-col lg:flex-row items-center justify-between gap-12 relative z-10">
-                    <!-- Left Column: Content -->
-                    <div class="w-full lg:w-3/5 text-left">
-                        <div class="inline-flex px-3 py-1 rounded-full bg-[#A3D9A5]/25 text-[#A3D9A5] text-xs font-bold uppercase tracking-wider mb-6">
-                            Aksi Pengurangan Emisi
-                        </div>
-                        <h2 class="text-3xl md:text-5xl font-extrabold text-white mb-6 tracking-tight leading-tight">
-                            Bantu Pulihkan Bumi dari Setiap Ton Emisi Anda
-                        </h2>
-                        <p class="text-gray-300 text-base md:text-lg mb-8 leading-relaxed max-w-xl font-medium">
-                            Kompensasikan jejak karbon harian Anda melalui program reboisasi mangrove terverifikasi dan transisi energi terbarukan lokal bersama EcoFlow.
-                        </p>
-                        <div class="flex flex-col sm:flex-row gap-4">
-                            <a href="#kalkulator" class="inline-flex items-center justify-center gap-2 bg-[#E67E5D] text-white hover:bg-[#d96d4b] active:scale-[0.98] px-8 py-4 rounded-full font-bold transition-all text-base shadow-lg">
-                                Mulai Aksi Sekarang
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                            </a>
-                            <a href="#tentang-kami" class="inline-flex items-center justify-center gap-2 bg-transparent text-white border border-white/20 hover:bg-white/10 active:scale-[0.98] px-8 py-4 rounded-full font-bold transition-all text-base">
-                                Pelajari Program Offset
-                            </a>
-                        </div>
-                    </div>
+    <section id="cta-offset" class="py-32 px-6 lg:px-16 bg-[#FCFAF7] relative overflow-hidden flex flex-col justify-center items-center min-h-[480px]">
+        <!-- Gradient Glow -->
+        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[250px] bg-gradient-to-t from-amber-100/30 via-amber-50/5 to-transparent rounded-full blur-3xl pointer-events-none z-0"></div>
 
-                    <!-- Right Column: Stats Card -->
-                    <div class="w-full lg:w-2/5">
-                        <div class="bg-white/10 backdrop-blur-md border border-white/10 p-8 rounded-[24px] text-white flex flex-col gap-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]">
-                            <!-- Stat 1: Total Users -->
-                            <div class="flex items-center gap-4">
-                                <div class="w-12 h-12 rounded-2xl bg-[#A3D9A5]/20 flex items-center justify-center">
-                                    <svg class="w-6 h-6 text-[#A3D9A5]" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                                        <circle cx="9" cy="7" r="4" />
-                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                                    </svg>
-                                </div>
-                                <div class="text-left">
-                                    <p class="text-xs text-gray-400 font-bold uppercase tracking-wider">Total Pengguna</p>
-                                    <h4 class="text-2xl font-bold text-white tracking-tight">{{ $formattedUsers }}</h4>
-                                </div>
-                            </div>
-                            <div class="h-px bg-white/10"></div>
-                            <!-- Stat 2: Total CO2e Reduced -->
-                            <div class="flex items-center gap-4">
-                                <div class="w-12 h-12 rounded-2xl bg-[#A3D9A5]/20 flex items-center justify-center">
-                                    <svg class="w-6 h-6 text-[#A3D9A5]" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                                    </svg>
-                                </div>
-                                <div class="text-left">
-                                    <p class="text-xs text-gray-400 font-bold uppercase tracking-wider">Total Emisi Dikurangi</p>
-                                    <h4 class="text-2xl font-bold text-white tracking-tight">{{ $formattedSaved }} kg CO₂e</h4>
-                                </div>
-                            </div>
-                            <div class="h-px bg-white/10"></div>
-                            <p class="text-xs text-gray-400 italic text-left">
-                                *Data dinamis terverifikasi real-time berdasarkan pencapaian gamifikasi dan aksi hijau kolektif pengguna EcoFlow.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+        <!-- Left Illustration SVG -->
+        <svg class="absolute bottom-0 left-0 w-[45%] md:w-[35%] h-auto pointer-events-none z-10" viewBox="0 0 350 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Background Hill -->
+            <path d="M-50 250 C 50 200, 150 210, 220 250 Z" fill="#4d9b80"/>
+            <!-- Foreground Hill -->
+            <path d="M-50 250 C 80 160, 180 180, 260 250 Z" fill="#6bcfae"/>
+            
+            <!-- Purple Flower Stem 1 -->
+            <path d="M80 190 Q 75 140 90 90" stroke="#7a349b" stroke-width="3" stroke-linecap="round" fill="none"/>
+            <circle cx="90" cy="90" r="8" fill="#c382e7" stroke="#7a349b" stroke-width="2"/>
+            <circle cx="85" cy="105" r="7" fill="#c382e7" stroke="#7a349b" stroke-width="2"/>
+            <circle cx="80" cy="120" r="7" fill="#c382e7" stroke="#7a349b" stroke-width="2"/>
+            <circle cx="78" cy="135" r="6" fill="#c382e7" stroke="#7a349b" stroke-width="2"/>
+            <circle cx="78" cy="150" r="6" fill="#c382e7" stroke="#7a349b" stroke-width="2"/>
+            
+            <!-- Yellow shoots Left -->
+            <path d="M40 185 C 40 140, 50 140, 48 185" fill="#f5b93d" stroke="#c48a1d" stroke-width="2"/>
+            <path d="M48 185 C 50 130, 60 130, 58 185" fill="#f5b93d" stroke="#c48a1d" stroke-width="2"/>
+            <path d="M58 185 C 60 145, 70 145, 68 185" fill="#f5b93d" stroke="#c48a1d" stroke-width="2"/>
+
+            <!-- Large green leaf Left -->
+            <path d="M-20 220 C 10 130, 80 180, 30 250 Z" fill="#58b292" stroke="#3b826a" stroke-width="2"/>
+            <path d="M-40 230 C -10 120, 60 160, 0 250 Z" fill="#4fa586" stroke="#3b826a" stroke-width="2"/>
+            
+            <!-- Floating tiny stars -->
+            <polygon points="35,110 37,115 42,115 38,118 40,123 35,120 30,123 32,118 28,115 33,115" fill="#f5b93d" />
+            <polygon points="120,160 122,163 126,163 123,165 124,169 120,167 116,169 117,165 114,163 118,163" fill="#c382e7" />
+        </svg>
+
+        <!-- Right Illustration SVG -->
+        <svg class="absolute bottom-0 right-0 w-[45%] md:w-[35%] h-auto pointer-events-none z-10" viewBox="0 0 350 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Background Hill -->
+            <path d="M150 250 C 220 210, 300 200, 400 250 Z" fill="#4d9b80"/>
+            <!-- Foreground Hill -->
+            <path d="M100 250 C 180 180, 270 160, 400 250 Z" fill="#6bcfae"/>
+            
+            <!-- Yellow flower on stem -->
+            <path d="M260 180 Q 275 130 250 85" stroke="#bda22a" stroke-width="3" stroke-linecap="round" fill="none"/>
+            <circle cx="250" cy="85" r="12" fill="#ffd54f" stroke="#bda22a" stroke-width="2"/>
+            <circle cx="250" cy="85" r="5" fill="#f57f17" />
+            
+            <!-- Blue flower stem -->
+            <path d="M220 190 Q 230 140 210 90" stroke="#34759b" stroke-width="3" stroke-linecap="round" fill="none"/>
+            <circle cx="210" cy="90" r="7" fill="#80cbc4" stroke="#34759b" stroke-width="2"/>
+            <circle cx="213" cy="105" r="7" fill="#80cbc4" stroke="#34759b" stroke-width="2"/>
+            <circle cx="218" cy="120" r="7" fill="#80cbc4" stroke="#34759b" stroke-width="2"/>
+            <circle cx="220" cy="135" r="6" fill="#80cbc4" stroke="#34759b" stroke-width="2"/>
+            
+            <!-- Yellow shoots Right -->
+            <path d="M290 185 C 290 140, 280 140, 282 185" fill="#f5b93d" stroke="#c48a1d" stroke-width="2"/>
+            <path d="M300 185 C 300 130, 290 130, 292 185" fill="#f5b93d" stroke="#c48a1d" stroke-width="2"/>
+            
+            <!-- Large green leaf Right -->
+            <path d="M320 220 C 290 130, 220 180, 270 250 Z" fill="#58b292" stroke="#3b826a" stroke-width="2"/>
+            <path d="M340 230 C 310 120, 240 160, 300 250 Z" fill="#4fa586" stroke="#3b826a" stroke-width="2"/>
+            
+            <!-- Floating tiny stars -->
+            <polygon points="310,110 312,113 316,113 313,115 314,119 310,117 306,119 307,115 304,113 308,113" fill="#ffd54f" />
+            <polygon points="180,150 182,153 186,153 183,155 184,159 180,157 176,159 177,155 174,153 178,153" fill="#80cbc4" />
+        </svg>
+
+        <div class="max-w-4xl mx-auto relative z-20 text-center reveal-up">
+            <h2 class="text-4xl md:text-6xl tracking-tight text-[#171717] mb-6 font-light leading-tight">
+                Mulai pantau, <span class="font-black border-b-4 border-[#1E3F35] pb-1 block md:inline">kurangi emisimu.</span>
+            </h2>
+            <p class="text-gray-500 text-base md:text-lg mb-10 leading-relaxed max-w-2xl mx-auto font-medium">
+                Lacak emisi karbon harianmu dalam hitungan menit, atau simulasikan dampak lingkunganmu sebelum mengambil aksi nyata bersama EcoFlow.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="#kalkulator" class="w-full sm:w-auto inline-flex items-center justify-center bg-[#fbc02d] hover:bg-[#f9a825] active:scale-[0.98] active:translate-y-0.5 text-[#1E3F35] py-3.5 px-8 rounded-full font-bold shadow-md transition-all text-sm uppercase tracking-wider leading-none">
+                    Mulai Gratis
+                </a>
+                <a href="#tentang-kami" class="w-full sm:w-auto inline-flex items-center justify-center bg-[#131722] hover:bg-[#1a1f2c] active:scale-[0.98] active:translate-y-0.5 text-white py-3.5 px-8 rounded-full font-bold shadow-md transition-all text-sm uppercase tracking-wider leading-none">
+                    Lihat Program
+                </a>
             </div>
         </div>
     </section>
