@@ -33,6 +33,21 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
                             </svg>
                             @break
+                        @case('energy')
+                            <svg class="w-12 h-12 text-[#2D5F50] mx-auto {{ $badge['earned'] ? '' : 'opacity-40 grayscale' }}" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                            @break
+                        @case('recycle')
+                            <svg class="w-12 h-12 text-[#2D5F50] mx-auto {{ $badge['earned'] ? '' : 'opacity-40 grayscale' }}" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                            @break
+                        @case('fuel')
+                            <svg class="w-12 h-12 text-[#2D5F50] mx-auto {{ $badge['earned'] ? '' : 'opacity-40 grayscale' }}" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 22h12M4 22V4a2 2 0 012-2h6a2 2 0 012 2v18M14 9h7.07a2 2 0 011.95 2.1l-.8 6a2 2 0 01-2.18 1.86H17M6 6h6v4H6V6z" />
+                            </svg>
+                            @break
                         @case('carbon')
                             <svg class="w-12 h-12 text-[#2D5F50] mx-auto {{ $badge['earned'] ? '' : 'opacity-40 grayscale' }}" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18M12 3C8.5 7 5.5 11 5.5 15c0 3.5 2.5 6 6.5 6m0-18c3.5 4 6.5 8 6.5 12 0 3.5-2.5 6-6.5 6" />
@@ -42,6 +57,11 @@
                             <svg class="w-12 h-12 text-[#2D5F50] mx-auto {{ $badge['earned'] ? '' : 'opacity-40 grayscale' }}" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                                 <circle cx="12" cy="12" r="10" />
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10m0-20a15.3 15.3 0 00-4 10 15.3 15.3 0 004 10M2 12h20" />
+                            </svg>
+                            @break
+                        @case('master')
+                            <svg class="w-12 h-12 text-[#2D5F50] mx-auto {{ $badge['earned'] ? '' : 'opacity-40 grayscale' }}" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14" />
                             </svg>
                             @break
                     @endswitch

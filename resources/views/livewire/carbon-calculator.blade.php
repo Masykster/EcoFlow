@@ -23,11 +23,11 @@
             @php
                 $tabConfig = [
                     'bahan_bakar' => ['title' => 'Fuel', 'desc' => 'Emisi gas buang bahan bakar.', 'img' => 'icon_fuel.png', 'color' => 'bg-[#2D5F50] text-white', 'border' => 'border-[#2D5F50]'],
-                    'elektronik'  => ['title' => 'Electronics', 'desc' => 'Emisi listrik perangkat.', 'img' => 'icon_electronics.png', 'color' => 'bg-[#F9FAFB] text-gray-800', 'border' => 'border-gray-200 hover:border-[#2D5F50]'],
-                    'penerbangan' => ['title' => 'Aviation', 'desc' => 'Penerbangan jarak jauh/dekat.', 'img' => 'icon_aviation.png', 'color' => 'bg-[#F9FAFB] text-gray-800', 'border' => 'border-gray-200 hover:border-[#2D5F50]'],
-                    'makanan'     => ['title' => 'Food', 'desc' => 'Emisi produksi & konsumsi.', 'img' => 'icon_food.png', 'color' => 'bg-[#F9FAFB] text-gray-800', 'border' => 'border-gray-200 hover:border-[#2D5F50]'],
-                    'sampah'      => ['title' => 'Waste', 'desc' => 'Emisi pengolahan limbah.', 'img' => 'icon_waste.png', 'color' => 'bg-[#D1E7DD] text-gray-800', 'border' => 'border-[#D1E7DD] hover:border-[#2D5F50]'],
-                    'kendaraan'   => ['title' => 'Vehicle', 'desc' => 'Emisi perjalanan darat.', 'img' => 'icon_vehicle.png', 'color' => 'bg-[#F9FAFB] text-gray-800', 'border' => 'border-gray-200 hover:border-[#2D5F50]'],
+                    'elektronik'  => ['title' => 'Electronics', 'desc' => 'Emisi listrik perangkat.', 'img' => 'icon_electronics.png', 'color' => 'bg-[#2D5F50] text-white', 'border' => 'border-[#2D5F50]'],
+                    'penerbangan' => ['title' => 'Aviation', 'desc' => 'Penerbangan jarak jauh/dekat.', 'img' => 'icon_aviation.png', 'color' => 'bg-[#2D5F50] text-white', 'border' => 'border-[#2D5F50]'],
+                    'makanan'     => ['title' => 'Food', 'desc' => 'Emisi produksi & konsumsi.', 'img' => 'icon_food.png', 'color' => 'bg-[#2D5F50] text-white', 'border' => 'border-[#2D5F50]'],
+                    'sampah'      => ['title' => 'Waste', 'desc' => 'Emisi pengolahan limbah.', 'img' => 'icon_waste.png', 'color' => 'bg-[#2D5F50] text-white', 'border' => 'border-[#2D5F50]'],
+                    'kendaraan'   => ['title' => 'Vehicle', 'desc' => 'Emisi perjalanan darat.', 'img' => 'icon_vehicle.png', 'color' => 'bg-[#2D5F50] text-white', 'border' => 'border-[#2D5F50]'],
                 ];
             @endphp
 

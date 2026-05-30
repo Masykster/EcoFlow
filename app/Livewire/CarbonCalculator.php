@@ -8,9 +8,11 @@ use App\Models\Transaction;
 use App\Services\GamificationService;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Livewire\Attributes\Url;
 
 class CarbonCalculator extends Component
 {
+    #[Url]
     public string $activeTab = 'bahan_bakar';
 
     // ── Tab: Bahan Bakar ─────────────────────────────────────────────────────

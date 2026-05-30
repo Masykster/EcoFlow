@@ -536,6 +536,10 @@ body, * {
     background: rgba(255, 255, 255, 0.05) !important;
     color: rgba(255, 255, 255, 0.4) !important;
 }
+.dark .bg-\[\#F9FAFB\] {
+    background-color: #0c1410 !important;
+}
+
 
 .dark .bg-green-50 {
     background-color: rgba(163, 217, 165, 0.05) !important;

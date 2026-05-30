@@ -13,15 +13,23 @@ class Achievements extends Component
     public array $allBadges = [];
 
     private array $badgeMeta = [
-        'Pejuang MRT'         => ['icon' => 'mrt', 'desc' => 'Gunakan transportasi rendah emisi (CO2 ≤ 0.5 kg per perjalanan)'],
-        'Vegetarian Mingguan' => ['icon' => 'vegetarian', 'desc' => 'Pilih makanan rendah karbon (CO2 ≤ 0.3 kg per makan)'],
-        'Carbon Fighter'      => ['icon' => 'carbon', 'desc' => 'Kumpulkan 200 poin EcoStep'],
-        'Eco Warrior'         => ['icon' => 'warrior', 'desc' => 'Kumpulkan 500 poin EcoStep'],
+        'Pejuang MRT'         => ['icon' => 'mrt',        'desc' => 'Gunakan transportasi rendah emisi (CO2 ≤ 1.0 kg per perjalanan)'],
+        'Vegetarian Mingguan' => ['icon' => 'vegetarian', 'desc' => 'Pilih makanan rendah karbon (CO2 ≤ 1.0 kg per makan)'],
+        'Penyelamat Energi'   => ['icon' => 'energy',     'desc' => 'Gunakan elektronik secara efisien (CO2 ≤ 2.0 kg per log)'],
+        'Pahlawan Sampah'     => ['icon' => 'recycle',    'desc' => 'Kelola sampah dan daur ulang (CO2 ≤ 3.0 kg per log)'],
+        'Penghemat BBM'       => ['icon' => 'fuel',       'desc' => 'Kurangi konsumsi bahan bakar fosil (CO2 ≤ 5.0 kg per log)'],
+        'Carbon Fighter'      => ['icon' => 'carbon',     'desc' => 'Kumpulkan 100 poin EcoStep'],
+        'Eco Warrior'         => ['icon' => 'warrior',    'desc' => 'Kumpulkan 300 poin EcoStep'],
+        'Eco Master'          => ['icon' => 'master',     'desc' => 'Kumpulkan 500 poin EcoStep'],
     ];
 
     public function mount(): void
     {
         $user      = Auth::user();
+        
+        // Trigger catch up to calculate points and unlock badges for historical transactions
+        app(\App\Services\GamificationService::class)->catchUpPoints($user);
+
         $userPoint = UserPoint::where('user_id', $user->id)->first();
 
         $this->points = $userPoint?->points ?? 0;

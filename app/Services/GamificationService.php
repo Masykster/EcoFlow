@@ -8,32 +8,53 @@ use App\Models\UserPoint;
 
 class GamificationService
 {
-    // Points awarded per action
-    private const POINTS_LOW_EMISSION_TRANSPORT = 50;
-    private const POINTS_VEGETARIAN_MEAL        = 20;
-    private const TARGET_DAILY_KG               = 5.0; // kg CO2e green target/day
-
     private array $badgeRules = [
-        'Pejuang MRT'        => ['slug' => 'transport', 'max_co2e' => 0.5],
-        'Vegetarian Mingguan' => ['slug' => 'food',      'max_co2e' => 0.3],
-        'Eco Warrior'        => ['min_points' => 500],
-        'Carbon Fighter'     => ['min_points' => 200],
+        'Pejuang MRT'         => ['slug' => 'kendaraan',   'max_co2e' => 1.0],
+        'Vegetarian Mingguan' => ['slug' => 'makanan',     'max_co2e' => 1.0],
+        'Penyelamat Energi'   => ['slug' => 'elektronik',  'max_co2e' => 2.0],
+        'Pahlawan Sampah'     => ['slug' => 'sampah',      'max_co2e' => 3.0],
+        'Penghemat BBM'       => ['slug' => 'bahan_bakar', 'max_co2e' => 5.0],
+        'Carbon Fighter'      => ['min_points' => 100],
+        'Eco Warrior'         => ['min_points' => 300],
+        'Eco Master'          => ['min_points' => 500],
     ];
 
     public function awardPoints(User $user, Transaction $transaction): void
     {
         $points = 0;
+        $categorySlug = $transaction->category?->slug;
+        $co2e = (float) $transaction->co2e;
 
-        if ($transaction->type === 'transport' && $transaction->co2e <= 0.5) {
-            $points += self::POINTS_LOW_EMISSION_TRANSPORT;
+        if ($categorySlug === 'kendaraan' || $categorySlug === 'penerbangan') {
+            if ($co2e <= 5.0) {
+                $points += 150;
+            } else if ($co2e <= 15.0) {
+                $points += 80;
+            }
+        } elseif ($categorySlug === 'makanan') {
+            if ($co2e <= 1.0) {
+                $points += 100;
+            } else if ($co2e <= 3.0) {
+                $points += 50;
+            }
+        } elseif ($categorySlug === 'elektronik') {
+            if ($co2e <= 2.0) {
+                $points += 100;
+            } else if ($co2e <= 5.0) {
+                $points += 50;
+            }
+        } elseif ($categorySlug === 'sampah') {
+            if ($co2e <= 3.0) {
+                $points += 100;
+            }
+        } elseif ($categorySlug === 'bahan_bakar') {
+            if ($co2e <= 5.0) {
+                $points += 100;
+            }
         }
 
-        if ($transaction->category?->slug === 'food' && $transaction->co2e <= 0.3) {
-            $points += self::POINTS_VEGETARIAN_MEAL;
-        }
-
-        if ($points <= 0) {
-            return;
+        if ($points === 0) {
+            $points = 50;
         }
 
         $userPoint = UserPoint::firstOrCreate(
@@ -43,6 +64,64 @@ class GamificationService
 
         $userPoint->increment('points', $points);
         $this->checkBadges($user, $userPoint->fresh());
+    }
+
+    public function catchUpPoints(User $user): void
+    {
+        $userPoint = UserPoint::firstOrCreate(
+            ['user_id' => $user->id],
+            ['points' => 0, 'badges' => []]
+        );
+
+        $transactions = $user->transactions()->with('category')->get();
+        $totalPoints = 0;
+
+        foreach ($transactions as $transaction) {
+            $points = 0;
+            $categorySlug = $transaction->category?->slug;
+            $co2e = (float) $transaction->co2e;
+
+            if ($categorySlug === 'kendaraan' || $categorySlug === 'penerbangan') {
+                if ($co2e <= 5.0) {
+                    $points += 150;
+                } else if ($co2e <= 15.0) {
+                    $points += 80;
+                }
+            } elseif ($categorySlug === 'makanan') {
+                if ($co2e <= 1.0) {
+                    $points += 100;
+                } else if ($co2e <= 3.0) {
+                    $points += 50;
+                }
+            } elseif ($categorySlug === 'elektronik') {
+                if ($co2e <= 2.0) {
+                    $points += 100;
+                } else if ($co2e <= 5.0) {
+                    $points += 50;
+                }
+            } elseif ($categorySlug === 'sampah') {
+                if ($co2e <= 3.0) {
+                    $points += 100;
+                }
+            } elseif ($categorySlug === 'bahan_bakar') {
+                if ($co2e <= 5.0) {
+                    $points += 100;
+                }
+            }
+
+            if ($points === 0) {
+                $points = 50;
+            }
+            
+            $totalPoints += $points;
+        }
+
+        if ($totalPoints > $userPoint->points) {
+            $userPoint->points = $totalPoints;
+            $userPoint->save();
+        }
+
+        $this->checkBadges($user, $userPoint);
     }
 
     public function checkBadges(User $user, ?UserPoint $userPoint = null): void
