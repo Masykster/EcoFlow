@@ -1,6 +1,8 @@
 <x-layouts::auth :title="__('Register')">
     <div class="flex flex-col gap-6">
-        <x-auth-header :title="__('Create an account')" :description="__('Enter your details below to create your account')" />
+        <div class="text-center">
+            <flux:heading size="xl" class="font-extrabold">{{ __('Create an account') }}</flux:heading>
+        </div>
 
         <!-- Session Status -->
         <x-auth-session-status class="text-center" :status="session('status')" />
@@ -16,18 +18,18 @@
                 required
                 autofocus
                 autocomplete="name"
-                :placeholder="__('Full name')"
+                placeholder="Enter your name"
             />
 
             <!-- Email Address -->
             <flux:input
                 name="email"
-                :label="__('Email address')"
+                :label="__('Email')"
                 :value="old('email')"
                 type="email"
                 required
                 autocomplete="email"
-                placeholder="email@example.com"
+                placeholder="Enter your email"
             />
 
             <!-- Password -->
@@ -37,31 +39,33 @@
                 type="password"
                 required
                 autocomplete="new-password"
-                :placeholder="__('Password')"
+                placeholder="Enter your password"
                 viewable
             />
 
             <!-- Confirm Password -->
             <flux:input
                 name="password_confirmation"
-                :label="__('Confirm password')"
+                :label="__('Confirm Password')"
                 type="password"
                 required
                 autocomplete="new-password"
-                :placeholder="__('Confirm password')"
+                placeholder="Confirm your password"
                 viewable
             />
 
             <div class="flex items-center justify-end">
-                <flux:button type="submit" variant="primary" class="w-full" data-test="register-user-button">
-                    {{ __('Create account') }}
+                <flux:button type="submit" class="w-full bg-[#12A150] hover:bg-[#0e803f] text-white font-bold py-3.5 rounded-xl border-none transition-colors duration-200" data-test="register-user-button">
+                    {{ __('Continue') }}
                 </flux:button>
             </div>
         </form>
 
-        <div class="space-x-1 rtl:space-x-reverse text-center text-sm text-zinc-600 dark:text-zinc-400">
-            <span>{{ __('Already have an account?') }}</span>
-            <flux:link :href="route('login')" wire:navigate>{{ __('Log in') }}</flux:link>
+        <div class="flex items-center justify-center text-sm mt-4">
+            <span class="text-zinc-600 dark:text-zinc-400 mr-1.5">{{ __('Already have an account?') }}</span>
+            <flux:link :href="route('login')" class="text-[#12A150] hover:text-[#0e803f] font-semibold" wire:navigate>
+                {{ __('Log in') }}
+            </flux:link>
         </div>
     </div>
 </x-layouts::auth>
