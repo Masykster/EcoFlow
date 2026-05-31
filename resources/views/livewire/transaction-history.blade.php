@@ -6,8 +6,98 @@
             <h1 class="text-2xl font-bold" style="color: var(--eco-primary)">Riwayat Transaksi</h1>
             <p class="text-sm mt-1" style="color: var(--eco-text-secondary)">Kelola dan filter semua riwayat emisi kamu</p>
         </div>
-        <a href="{{ route('calculator') }}" class="eco-btn eco-btn-primary active:scale-[0.98] active:translate-y-0.5">+ Tambah</a>
+        <div class="flex items-center gap-2">
+            <button wire:click="openExportModal"
+                class="eco-btn eco-btn-secondary active:scale-[0.98] active:translate-y-0.5 text-sm"
+                id="btn-export-open">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Ekspor
+            </button>
+            <a href="{{ route('calculator') }}" class="eco-btn eco-btn-primary active:scale-[0.98] active:translate-y-0.5">+ Tambah</a>
+        </div>
     </div>
+
+    {{-- Export Modal --}}
+    @if($showExportModal)
+        <div style="position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:50;display:flex;align-items:center;justify-content:center;"
+             x-data="{ mode: @entangle('exportMode').live }"
+             x-transition>
+            <div class="bento-card" style="max-width: 480px; width: 92%;" @click.away="$wire.closeExportModal()">
+
+                {{-- Modal Header --}}
+                <div class="flex items-center justify-between mb-5">
+                    <div>
+                        <h3 class="text-lg font-bold" style="color: var(--eco-text-primary)">Ekspor Laporan</h3>
+                        <p class="text-xs mt-0.5" style="color: var(--eco-text-secondary)">Pilih periode dan unduh file CSV</p>
+                    </div>
+                    <button wire:click="closeExportModal"
+                        class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-black/5 dark:hover:bg-white/5 transition cursor-pointer"
+                        style="color: var(--eco-text-secondary)">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                {{-- Period Preset Pills --}}
+                <p class="text-xs font-semibold mb-2 uppercase tracking-wider" style="color: var(--eco-text-secondary)">Periode</p>
+                <div class="grid grid-cols-4 gap-2 mb-4">
+                    @foreach([
+                        'daily'   => 'Hari Ini',
+                        'monthly' => 'Bulan Ini',
+                        'yearly'  => 'Tahun Ini',
+                        'custom'  => 'Custom',
+                    ] as $key => $label)
+                        <button
+                            x-on:click="mode = '{{ $key }}'; $wire.setExportMode('{{ $key }}')"
+                            :class="mode === '{{ $key }}'
+                                ? 'bg-[#1E3F35] dark:bg-[#A3D9A5] text-white dark:text-[#0c1410] border-[#1E3F35] dark:border-[#A3D9A5]'
+                                : 'bg-transparent border-gray-300 dark:border-white/10'"
+                            class="text-xs font-bold py-2.5 px-3 rounded-xl border-2 transition-all duration-200 cursor-pointer"
+                            style="color: var(--eco-text-primary)"
+                            id="export-mode-{{ $key }}">
+                            {{ $label }}
+                        </button>
+                    @endforeach
+                </div>
+
+                {{-- Custom Date Range --}}
+                <div x-show="mode === 'custom'" x-transition class="mb-4">
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="text-xs font-semibold mb-1 block" style="color: var(--eco-text-secondary)">Dari</label>
+                            <input type="date" wire:model.live="exportFrom" class="eco-input-field text-sm" id="export-from" />
+                        </div>
+                        <div>
+                            <label class="text-xs font-semibold mb-1 block" style="color: var(--eco-text-secondary)">Sampai</label>
+                            <input type="date" wire:model.live="exportTo" class="eco-input-field text-sm" id="export-to" />
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Info Note --}}
+                <div class="rounded-xl p-3 mb-5" style="background: rgba(163,217,165,0.08); border: 1px solid rgba(163,217,165,0.2);">
+                    <p class="text-xs" style="color: var(--eco-text-secondary)">
+                        <span class="font-bold" style="color: var(--eco-primary)">ℹ️ Info:</span>
+                        File CSV dapat dibuka di Excel, Google Sheets, atau aplikasi spreadsheet lainnya. Filter kategori dan tipe yang aktif akan diterapkan.
+                    </p>
+                </div>
+
+                {{-- Action Buttons --}}
+                <div class="flex gap-3">
+                    <button wire:click="closeExportModal" class="eco-btn eco-btn-secondary flex-1 active:scale-[0.98] active:translate-y-0.5">Batal</button>
+                    <button wire:click="exportReport" class="eco-btn eco-btn-primary flex-1 active:scale-[0.98] active:translate-y-0.5" id="btn-download-csv">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                        Download CSV
+                    </button>
+                </div>
+            </div>
+        </div>
+    @endif
 
     {{-- Filters --}}
     <div class="bento-card" style="padding: var(--eco-space-md);">

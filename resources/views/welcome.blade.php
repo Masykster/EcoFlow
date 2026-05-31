@@ -984,6 +984,8 @@
             if (window.matchMedia("(min-width: 768px)").matches) {
                 const cursor = document.getElementById('custom-cursor');
                 const cursorLabel = document.getElementById('cursor-label');
+                const cursorArrow = document.getElementById('cursor-svg');
+                const cursorHand = document.getElementById('cursor-hand');
                 
                 const labels = [
                     "Sustainability Hero",
@@ -1006,6 +1008,16 @@
                     
                     // Immediately move the main cursor and label container
                     cursor.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+                    
+                    // Check if hovering over any interactive element (buttons, links, or elements with cursor pointer)
+                    const hoverTarget = e.target.closest('a, button, [role="button"], .cursor-pointer, input[type="submit"], input[type="button"], select, .faq-trigger, [onclick]');
+                    if (hoverTarget) {
+                        cursorArrow.classList.add('hidden');
+                        cursorHand.classList.remove('hidden');
+                    } else {
+                        cursorArrow.classList.remove('hidden');
+                        cursorHand.classList.add('hidden');
+                    }
                 });
 
                 document.addEventListener('mousedown', (e) => {
@@ -1067,6 +1079,15 @@
             <!-- Arrow SVG -->
             <svg id="cursor-svg" class="absolute w-[28px] h-[29px] drop-shadow-md z-10 transition-transform duration-100 origin-top-left" style="top: 0; left: 0;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M1 1 L16 7 L9 9 L6 17 Z" fill="#12A150" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+            </svg>
+            
+            <!-- Hand SVG -->
+            <svg id="cursor-hand" class="absolute w-[30px] h-[30px] drop-shadow-md z-10 transition-transform duration-100 origin-top-left hidden" style="top: 0; left: -6.75px; transform: rotate(-20deg); transform-origin: 6.75px 0px;" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.5 4.466V1.75a1.75 1.75 0 1 0-3.5 0v5.34l-1.2.24a1.5 1.5 0 0 0-1.196 1.636l.345 3.106a2.5 2.5 0 0 0 .405 1.11l1.433 2.15A1.5 1.5 0 0 0 6.035 16h6.385a1.5 1.5 0 0 0 1.302-.756l1.395-2.441a3.5 3.5 0 0 0 .444-1.389l.271-2.715a2 2 0 0 0-1.99-2.199h-.581a5 5 0 0 0-.195-.248c-.191-.229-.51-.568-.88-.716-.364-.146-.846-.132-1.158-.108l-.132.012a1.26 1.26 0 0 0-.56-.642 2.6 2.6 0 0 0-.738-.288c-.31-.062-.739-.058-1.05-.046zm2.094 2.025" fill="white" stroke="#12A150" stroke-width="1.2" stroke-linejoin="round"/>
+                <!-- Three vertical stripes on the palm -->
+                <line x1="6.8" y1="9.5" x2="6.8" y2="12.5" stroke="#12A150" stroke-width="1.2" stroke-linecap="round"/>
+                <line x1="8.3" y1="9.5" x2="8.3" y2="12.5" stroke="#12A150" stroke-width="1.2" stroke-linecap="round"/>
+                <line x1="9.8" y1="9.5" x2="9.8" y2="12.5" stroke="#12A150" stroke-width="1.2" stroke-linecap="round"/>
             </svg>
             
             <!-- Label (Ribbon) -->
