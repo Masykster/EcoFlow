@@ -45,7 +45,7 @@
                     <!-- EcoFlow Identity Logo inside the Card -->
                     <div class="flex items-center justify-center gap-2 mb-8">
                         <x-app-logo-icon class="w-6 h-6 text-[#12A150]" />
-                        <span class="text-lg font-black tracking-tight text-zinc-900 dark:text-white">EcoFlow<span class="text-[#12A150]">Identity</span></span>
+                        <span class="text-lg font-black tracking-tight text-zinc-900 dark:text-white">EcoFlow</span>
                     </div>
 
                     {{ $slot }}
