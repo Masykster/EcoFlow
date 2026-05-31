@@ -204,9 +204,9 @@
             <div class="w-full md:w-1/2 relative rounded-[32px] overflow-hidden shadow-2xl group reveal-right" id="slider" style="aspect-ratio: 4/3;">
                 <div id="slides" class="flex transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] w-[300%] h-full">
                     <div class="w-1/3 h-full relative">
-                        <img src="/images/plant_glass.png" alt="Plant in glass" class="w-full h-full object-cover">
+                        <img src="/images/slider_badges.png" alt="Eco Badges" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                        <div class="absolute bottom-8 left-8 text-white"><h3 class="font-bold text-2xl">Penanaman Pohon</h3></div>
+                        <div class="absolute bottom-8 left-8 text-white"><h3 class="font-bold text-2xl">Pencapaian & Badge</h3></div>
                     </div>
                     <div class="w-1/3 h-full relative">
                         <img src="/images/slider_analytics.png" alt="Eco Analytics" class="w-full h-full object-cover">
@@ -214,9 +214,9 @@
                         <div class="absolute bottom-8 left-8 text-white"><h3 class="font-bold text-2xl">Analitik Emisi</h3></div>
                     </div>
                     <div class="w-1/3 h-full relative">
-                        <img src="/images/slider_community.png" alt="Eco Community" class="w-full h-full object-cover">
+                        <img src="/images/slider_export.png" alt="Eco Report Export" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                        <div class="absolute bottom-8 left-8 text-white"><h3 class="font-bold text-2xl">Aksi Komunitas</h3></div>
+                        <div class="absolute bottom-8 left-8 text-white"><h3 class="font-bold text-2xl">Riwayat & Ekspor Laporan</h3></div>
                     </div>
                 </div>
                 
@@ -670,14 +670,14 @@
                 <!-- FAQ Item 4 -->
                 <div class="py-5">
                     <button class="faq-trigger w-full flex justify-between items-center text-left font-bold text-lg text-[#111827] py-2 focus:outline-none transition-colors hover:text-[#1E3F35]">
-                        <span>Bagaimana cara kerja Carbon Offsetting di platform ini?</span>
+                        <span>Bagaimana sistem poin dan pencapaian di EcoFlow bekerja?</span>
                         <svg class="faq-icon w-5 h-5 text-[#4B5563] transition-transform duration-300 transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
                     <div class="faq-panel max-h-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out">
                         <p class="text-[#4B5563] text-sm md:text-base leading-relaxed pt-2 pb-4 font-medium">
-                            Setiap pohon mangrove yang Anda kompensasikan ditanam oleh mitra konservasi lokal bersertifikat kami di Indonesia. Kami merekam titik koordinat pohon, foto pemantauan pertumbuhan berkala, dan mengonversikan potensi serapan karbonnya untuk dikreditkan langsung ke profil pelacakan karbon Anda di dashboard EcoFlow.
+                            Setiap kali Anda mencatat aktivitas harian — seperti naik transportasi umum, mengurangi konsumsi daging, atau menghemat listrik — Anda akan mendapatkan <strong>EcoPoints</strong> berdasarkan seberapa besar pengurangan emisi yang berhasil Anda capai. Poin ini membuka <strong>badge pencapaian</strong> eksklusif seperti "Pejuang MRT", "Eco Warrior", hingga "Carbon Fighter". Semakin konsisten kebiasaan ramah lingkungan Anda, semakin tinggi level dan badge yang bisa Anda raih.
                         </p>
                     </div>
                 </div>
