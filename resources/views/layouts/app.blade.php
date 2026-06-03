@@ -3,18 +3,18 @@
 <head>
     @include('partials.head')
 </head>
-<body class="min-h-screen h-[100dvh] bg-[#edf2ef] dark:bg-[#090f0d] text-slate-800 dark:text-white overflow-hidden"
+<body class="min-h-screen h-[100dvh] bg-[#f4f6f8] dark:bg-[#090f0d] text-slate-800 dark:text-white overflow-hidden"
       x-data="{ theme: localStorage.getItem('theme') || 'dark' }"
       x-init="$watch('theme', val => { localStorage.setItem('theme', val); window.dispatchEvent(new CustomEvent('theme-changed', { detail: val })); })"
       :class="{ 'dark': theme === 'dark' }">
-    <div class="h-[100dvh] w-full bg-[#edf2ef] dark:bg-[#090f0d] text-slate-800 dark:text-white p-4 md:p-6 flex flex-col items-center justify-center relative overflow-hidden">
+    <div class="h-[100dvh] w-full bg-[#f4f6f8] dark:bg-[#090f0d] text-slate-800 dark:text-white relative overflow-hidden">
         {{-- Ambient Background Leaves --}}
-        <div class="absolute inset-0 z-0 bg-cover bg-center filter blur-xl opacity-5 dark:opacity-20 scale-105 pointer-events-none" 
-             style="background-image: url('/images/hero_forest.png');"></div>
-        <div class="absolute inset-0 z-0 bg-gradient-to-b from-[#e1e8e4]/80 via-[#edf2ef]/90 to-[#e5ebe7]/95 dark:from-[#090f0c]/90 dark:via-[#0c1410]/95 dark:to-[#050a08]/98 pointer-events-none"></div>
+        {{-- <div class="absolute inset-0 z-0 bg-cover bg-center filter blur-xl opacity-5 dark:opacity-20 scale-105 pointer-events-none" 
+             style="background-image: url('/images/hero_forest.png');"></div> --}}
+        {{-- <div class="absolute inset-0 z-0 bg-gradient-to-b from-[#e1e8e4]/80 via-[#edf2ef]/90 to-[#e5ebe7]/95 dark:from-[#090f0c]/90 dark:via-[#0c1410]/95 dark:to-[#050a08]/98 pointer-events-none"></div> --}}
 
         {{-- Main Glassmorphic Panel --}}
-        <div class="relative z-10 w-full max-w-[1280px] h-[92vh] bg-white/60 dark:bg-[#121c17]/60 dark:bg-zinc-950/45 backdrop-blur-xl border border-black/5 dark:border-white/10 rounded-[3rem] p-6 md:p-8 shadow-2xl flex flex-col justify-between gap-4 overflow-hidden">
+        <div class="relative z-10 w-full h-full p-6 md:p-8 flex flex-col justify-between gap-4 overflow-hidden">
             
             {{-- Header inside the panel --}}
             <div class="flex flex-col md:flex-row justify-between items-center gap-4 pb-2 border-b border-white/5 shrink-0">
