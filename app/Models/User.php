@@ -24,6 +24,7 @@ class User extends Authenticatable implements JWTSubject
         'password',
         'api_key',
         'monthly_carbon_limit',
+        'firebase_uid',
     ];
 
     protected $hidden = [

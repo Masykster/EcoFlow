@@ -22,12 +22,14 @@ class CreateNewUser implements CreatesNewUsers
         Validator::make($input, [
             ...$this->profileRules(),
             'password' => $this->passwordRules(),
+            'firebase_uid' => ['nullable', 'string', 'unique:users,firebase_uid'],
         ])->validate();
 
         return User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => $input['password'],
+            'firebase_uid' => $input['firebase_uid'] ?? null,
         ]);
     }
 }

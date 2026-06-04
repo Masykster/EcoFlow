@@ -4,9 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CalculatorController;
 use App\Http\Controllers\Api\CarbonController;
 use App\Http\Controllers\Api\DashboardController;
-use App\Http\Controllers\Api\GamificationController;
 use App\Http\Controllers\Api\NudgeController;
-use App\Http\Controllers\Api\SnapBiController;
 use App\Http\Controllers\Api\SocialiteController;
 use App\Http\Controllers\Api\TransactionController;
 use Illuminate\Support\Facades\Route;
@@ -40,15 +38,10 @@ Route::prefix('v1')->group(function () {
         Route::get('dashboard/weekly',  [DashboardController::class, 'weekly']);
         Route::get('dashboard/monthly', [DashboardController::class, 'monthly']);
 
-        Route::get('gamification/leaderboard', [GamificationController::class, 'leaderboard']);
-
         Route::get('tips/green-nudges', [NudgeController::class, 'greenNudges']);
     });
 
-    // ── SNAP BI Simulation (API Key + SNAP headers) ───────────────────────────
-    Route::middleware(['api.key', 'snap.bi'])->group(function () {
-        Route::get('snap/bank-statement', [SnapBiController::class, 'bankStatement']);
-    });
+
 
     // ── Admin (Basic Auth) ────────────────────────────────────────────────────
     // Placeholder: add admin controllers here with middleware('basic.auth')

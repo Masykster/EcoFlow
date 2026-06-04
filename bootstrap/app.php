@@ -16,7 +16,6 @@ return Application::configure(basePath: dirname(__DIR__))
             'jwt'       => \App\Http\Middleware\JwtMiddleware::class,
             'basic.auth' => \App\Http\Middleware\BasicAuthMiddleware::class,
             'api.key'   => \App\Http\Middleware\ApiKeyMiddleware::class,
-            'snap.bi'   => \App\Http\Middleware\SnapBiMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

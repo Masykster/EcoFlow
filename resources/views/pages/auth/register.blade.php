@@ -9,6 +9,7 @@
 
         <form method="POST" action="{{ route('register.store') }}" class="flex flex-col gap-6">
             @csrf
+            <input type="hidden" name="firebase_uid" id="firebase_uid" />
             <!-- Name -->
             <flux:input
                 name="name"
@@ -69,3 +70,56 @@
         </div>
     </div>
 </x-layouts::auth>
+
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const firebaseConfig = {
+            apiKey: "{{ config('services.firebase.api_key') }}",
+            authDomain: "{{ config('services.firebase.auth_domain') }}",
+            projectId: "{{ config('services.firebase.project_id') }}",
+            storageBucket: "{{ config('services.firebase.storage_bucket') }}",
+            messagingSenderId: "{{ config('services.firebase.messaging_sender_id') }}",
+            appId: "{{ config('services.firebase.app_id') }}"
+        };
+
+        const hasConfig = firebaseConfig.apiKey && firebaseConfig.apiKey !== '';
+        let auth;
+        if (hasConfig) {
+            firebase.initializeApp(firebaseConfig);
+            auth = firebase.auth();
+        } else {
+            console.warn("Firebase credentials not configured in .env. Running in Mock/Simulator mode.");
+        }
+
+        const registerForm = document.querySelector('form[action="{{ route('register.store') }}"]');
+        if (registerForm) {
+            registerForm.addEventListener('submit', async function(e) {
+                const firebaseUidInput = document.getElementById('firebase_uid');
+                if (firebaseUidInput && firebaseUidInput.value) {
+                    return; // Allow native submission
+                }
+
+                e.preventDefault();
+
+                const email = registerForm.querySelector('input[name="email"]').value;
+                const password = registerForm.querySelector('input[name="password"]').value;
+
+                if (hasConfig) {
+                    try {
+                        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                        firebaseUidInput.value = userCredential.user.uid;
+                        registerForm.submit();
+                    } catch (error) {
+                        alert("Firebase Registration Error: " + error.message);
+                    }
+                } else {
+                    console.log("Firebase Simulated registration successful.");
+                    firebaseUidInput.value = 'mock-firebase-uid-' + Math.random().toString(36).substring(2, 15);
+                    registerForm.submit();
+                }
+            });
+        }
+    });
+</script>

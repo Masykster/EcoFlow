@@ -157,18 +157,4 @@ class GamificationService
 
         $userPoint->update(['badges' => $earned]);
     }
-
-    public function getLeaderboard(int $limit = 10): array
-    {
-        return UserPoint::with('user:id,name')
-            ->orderByDesc('points')
-            ->limit($limit)
-            ->get()
-            ->map(fn ($up) => [
-                'name'   => $up->user->name,
-                'points' => $up->points,
-                'badges' => $up->badges,
-            ])
-            ->toArray();
-    }
 }
