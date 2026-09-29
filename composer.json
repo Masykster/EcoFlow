@@ -42,6 +42,11 @@
         }
     },
     "scripts": {
+        "vercel": [
+            "@php artisan config:clear --ansi",
+            "@php artisan route:clear --ansi",
+            "@php artisan view:clear --ansi"
+        ],
         "setup": [
             "composer install",
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",

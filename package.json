@@ -6,7 +6,8 @@
         "build": "vite build",
         "dev": "vite",
         "astro:dev": "npm --prefix astro run dev",
-        "astro:build": "npm --prefix astro install --no-audit --no-fund && npm --prefix astro run build"
+        "astro:build": "cd astro && npm install --no-audit --no-fund && npm run build",
+        "build:astro": "cd astro && npm install --no-audit --no-fund && npm run build"
     },
     "dependencies": {
         "@tailwindcss/vite": "^4.1.11",

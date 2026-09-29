@@ -1,0 +1,17 @@
+# Vercel upload ignore — vendor/composer deps di-install ulang oleh vercel-php runtime,
+# .env tidak boleh ikut ter-upload (pakai Environment Variables di dashboard).
+/vendor
+/node_modules
+/astro/node_modules
+/astro/dist
+/astro/.astro
+.env
+.env.backup
+.env.production
+/storage/logs/*
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/pail
+/.git
+/.agents
