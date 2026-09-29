@@ -55,3 +55,10 @@ DESIGN.md
 laporan.txt
 laporan-api.txt
 EcoStep_API.postman_collection.json
+
+# Astro landing (astro-laravel) — generated outputs, rebuilt via `npm run build:astro`
+/astro/node_modules
+/astro/dist
+/astro/.astro
+/resources/views/astro
+/public/_astro

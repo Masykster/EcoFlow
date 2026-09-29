@@ -1,0 +1,48 @@
+<!-- Floating Navbar (Jejakin Style) -->
+<div
+    id="floating-navbar-container"
+    class="fixed top-6 left-0 right-0 z-50 px-4 md:px-0 flex justify-center pointer-events-none transition-all duration-500 transform -translate-y-12 opacity-0 scale-95"
+>
+    <nav
+        id="floating-navbar"
+        class="bg-white/70 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.03)] shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] rounded-full px-6 py-3 flex items-center justify-between pointer-events-auto transition-all duration-700 ease-out w-[60px] opacity-0 overflow-hidden"
+    >
+        <div
+            id="navbar-content"
+            class="w-[1100px] max-w-[85vw] flex justify-between items-center opacity-0 transition-opacity duration-300 pointer-events-none flex-shrink-0"
+        >
+            <div class="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
+                <img src="/favicon.svg" alt="EcoFlow Logo" class="w-8 h-8 object-contain" />
+                <span class="text-xl font-bold tracking-tight text-[#111827]">EcoFlow</span>
+            </div>
+
+            <div id="nav-links" class="hidden md:flex items-center gap-8 text-sm font-semibold text-[#4B5563]">
+                <a
+                    href="#beranda"
+                    class="nav-link text-[#1E3F35] relative after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-[2px] after:bg-[#A3D9A5] after:rounded-full"
+                    >Beranda</a
+                >
+                <a href="#tentang-kami" class="nav-link hover:text-[#1E3F35] transition-colors">Tentang Kami</a>
+                <a href="#kalkulator" class="nav-link hover:text-[#1E3F35] transition-colors">Kalkulator</a>
+                <a href="#cta-offset" class="nav-link hover:text-[#1E3F35] transition-colors">Aksi Hijau</a>
+                <a href="#faq" class="nav-link hover:text-[#1E3F35] transition-colors">FAQ</a>
+            </div>
+
+            <div>
+                {"@auth"}
+                <a
+                    href={"{{ url('/dashboard') }}"}
+                    class="bg-[#1E3F35] hover:bg-[#A3D9A5] hover:text-[#1E3F35] text-white px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 active:scale-[0.98]"
+                    >Dashboard</a
+                >
+                {"@else"}
+                <a
+                    href={"{{ route('login') }}"}
+                    class="bg-[#1E3F35] hover:bg-[#A3D9A5] hover:text-[#1E3F35] text-white px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 active:scale-[0.98]"
+                    >Sign In</a
+                >
+                {"@endauth"}
+            </div>
+        </div>
+    </nav>
+</div>

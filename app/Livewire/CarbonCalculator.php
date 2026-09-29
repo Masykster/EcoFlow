@@ -57,7 +57,13 @@ class CarbonCalculator extends Component
 
     public function mount(): void
     {
-        $this->loadData();
+        // Guest mode (landing page) fully works without a database:
+        // emission factors come from a static snapshot mirroring the seeders.
+        if ($this->isGuestMode) {
+            $this->loadStaticData();
+        } else {
+            $this->loadData();
+        }
     }
 
     private function loadData(): void
@@ -82,6 +88,124 @@ class CarbonCalculator extends Component
         $this->sp_ef_id = $this->efByCategory['sampah'][0]['id'] ?? null;      // Plastik
         $this->el_ef_id = $this->efByCategory['elektronik'][0]['id'] ?? null;
         $this->kd_ef_id = $this->efByCategory['kendaraan'][3]['id'] ?? null;   // Motor Bensin
+    }
+
+    /**
+     * Static snapshot of CategorySeeder + EmissionFactorSeeder.
+     * Used in guest mode so the landing page renders and calculates
+     * with zero database queries. Negative ids can never collide
+     * with auto-increment DB ids.
+     */
+    private function loadStaticData(): void
+    {
+        $dataset = self::staticDataset();
+
+        $this->categories = $dataset['categories'];
+
+        $nextId = -1;
+        foreach ($dataset['factors'] as $slug => $items) {
+            $rows = [];
+            foreach ($items as $item) {
+                $rows[] = [
+                    'id'           => $nextId--,
+                    'name'         => $item['name'],
+                    'factor_value' => $item['factor_value'],
+                    'unit'         => $item['unit'],
+                    'metadata'     => $item['metadata'] ?? null,
+                ];
+            }
+            $this->efByCategory[$slug] = $rows;
+        }
+
+        // Set defaults (same indices as loadData)
+        $this->bb_ef_id = $this->efByCategory['bahan_bakar'][5]['id'] ?? null; // Pertamax
+        $this->fl_ef_id = $this->efByCategory['penerbangan'][0]['id'] ?? null; // Ekonomi
+        $this->mk_ef_id = $this->efByCategory['makanan'][0]['id'] ?? null;     // Telur
+        $this->sp_ef_id = $this->efByCategory['sampah'][0]['id'] ?? null;      // Plastik
+        $this->el_ef_id = $this->efByCategory['elektronik'][0]['id'] ?? null;
+        $this->kd_ef_id = $this->efByCategory['kendaraan'][3]['id'] ?? null;   // Motor Bensin
+    }
+
+    private static function staticDataset(): array
+    {
+        $efListrik = 0.87; // kg CO2e/kWh PLN (ESDM RI)
+
+        return [
+            'categories' => [
+                'bahan_bakar' => ['slug' => 'bahan_bakar', 'name' => 'Bahan Bakar', 'emission_factor' => 2.33, 'unit' => 'liter', 'description' => 'Minyak tanah, LPG, solar, bensin rumah tangga'],
+                'elektronik'  => ['slug' => 'elektronik', 'name' => 'Elektronik', 'emission_factor' => 0.87, 'unit' => 'kwh', 'description' => 'Penggunaan perangkat elektronik rumah tangga'],
+                'penerbangan' => ['slug' => 'penerbangan', 'name' => 'Penerbangan', 'emission_factor' => 0.15, 'unit' => 'km', 'description' => 'Perjalanan udara domestik/internasional'],
+                'makanan'     => ['slug' => 'makanan', 'name' => 'Makanan', 'emission_factor' => 4.8, 'unit' => 'kg_food', 'description' => 'Konsumsi bahan makanan sehari-hari'],
+                'sampah'      => ['slug' => 'sampah', 'name' => 'Sampah', 'emission_factor' => 6.0, 'unit' => 'kg', 'description' => 'Sampah plastik, kertas/karton'],
+                'kendaraan'   => ['slug' => 'kendaraan', 'name' => 'Kendaraan', 'emission_factor' => 2.33, 'unit' => 'km', 'description' => 'Kendaraan pribadi berbahan bakar atau listrik'],
+            ],
+            'factors' => [
+                'bahan_bakar' => [
+                    ['name' => 'Minyak Tanah', 'factor_value' => 2.52, 'unit' => 'kg CO2e/liter'],
+                    ['name' => 'Minyak Residu', 'factor_value' => 3.11, 'unit' => 'kg CO2e/liter'],
+                    ['name' => 'LPG', 'factor_value' => 1.53, 'unit' => 'kg CO2e/liter'],
+                    ['name' => 'Diesel / Solar', 'factor_value' => 2.68, 'unit' => 'kg CO2e/liter'],
+                    ['name' => 'Biosolar (B35)', 'factor_value' => 1.74, 'unit' => 'kg CO2e/liter'],
+                    ['name' => 'Pertamax', 'factor_value' => 2.33, 'unit' => 'kg CO2e/liter'],
+                    ['name' => 'Pertalite', 'factor_value' => 2.33, 'unit' => 'kg CO2e/liter'],
+                    ['name' => 'Pertamax Turbo', 'factor_value' => 2.33, 'unit' => 'kg CO2e/liter'],
+                    ['name' => 'Pertamax Green', 'factor_value' => 2.20, 'unit' => 'kg CO2e/liter'],
+                ],
+                'elektronik' => [
+                    ['name' => 'Setrika', 'factor_value' => $efListrik, 'unit' => 'kg CO2e/kWh', 'metadata' => ['watt' => 350]],
+                    ['name' => 'Mesin Cuci', 'factor_value' => $efListrik, 'unit' => 'kg CO2e/kWh', 'metadata' => ['watt' => 300]],
+                    ['name' => 'Dispenser', 'factor_value' => $efListrik, 'unit' => 'kg CO2e/kWh', 'metadata' => ['watt' => 350]],
+                    ['name' => 'Kipas Angin', 'factor_value' => $efListrik, 'unit' => 'kg CO2e/kWh', 'metadata' => ['watt' => 50]],
+                    ['name' => 'Komputer (PC)', 'factor_value' => $efListrik, 'unit' => 'kg CO2e/kWh', 'metadata' => ['watt' => 200]],
+                    ['name' => 'Laptop', 'factor_value' => $efListrik, 'unit' => 'kg CO2e/kWh', 'metadata' => ['watt' => 50]],
+                    ['name' => 'Kulkas', 'factor_value' => $efListrik, 'unit' => 'kg CO2e/kWh', 'metadata' => ['watt' => 100]],
+                    ['name' => 'Printer', 'factor_value' => $efListrik, 'unit' => 'kg CO2e/kWh', 'metadata' => ['watt' => 30]],
+                    ['name' => 'Televisi', 'factor_value' => $efListrik, 'unit' => 'kg CO2e/kWh', 'metadata' => ['watt' => 100]],
+                    ['name' => 'Rice Cooker', 'factor_value' => $efListrik, 'unit' => 'kg CO2e/kWh', 'metadata' => ['watt' => 350]],
+                    ['name' => 'Kompor Listrik', 'factor_value' => $efListrik, 'unit' => 'kg CO2e/kWh', 'metadata' => ['watt' => 1000]],
+                    ['name' => 'Blender', 'factor_value' => $efListrik, 'unit' => 'kg CO2e/kWh', 'metadata' => ['watt' => 300]],
+                    ['name' => 'Oven Listrik', 'factor_value' => $efListrik, 'unit' => 'kg CO2e/kWh', 'metadata' => ['watt' => 1000]],
+                    ['name' => 'Microwave', 'factor_value' => $efListrik, 'unit' => 'kg CO2e/kWh', 'metadata' => ['watt' => 800]],
+                    ['name' => 'Vacuum Cleaner', 'factor_value' => $efListrik, 'unit' => 'kg CO2e/kWh', 'metadata' => ['watt' => 600]],
+                    ['name' => 'Water Heater', 'factor_value' => $efListrik, 'unit' => 'kg CO2e/kWh', 'metadata' => ['watt' => 800]],
+                ],
+                'penerbangan' => [
+                    ['name' => 'Ekonomi', 'factor_value' => 0.15, 'unit' => 'kg CO2e/km'],
+                    ['name' => 'Bisnis/First Class', 'factor_value' => 0.45, 'unit' => 'kg CO2e/km'],
+                ],
+                'makanan' => [
+                    ['name' => 'Telur', 'factor_value' => 4.8, 'unit' => 'kg CO2e/kg'],
+                    ['name' => 'Susu', 'factor_value' => 3.2, 'unit' => 'kg CO2e/kg'],
+                    ['name' => 'Ikan', 'factor_value' => 5.1, 'unit' => 'kg CO2e/kg'],
+                    ['name' => 'Beras', 'factor_value' => 4.5, 'unit' => 'kg CO2e/kg'],
+                    ['name' => 'Seafood (Udang/Kerang)', 'factor_value' => 26.9, 'unit' => 'kg CO2e/kg'],
+                    ['name' => 'Unggas (Ayam/Bebek)', 'factor_value' => 9.9, 'unit' => 'kg CO2e/kg'],
+                    ['name' => 'Daging Domba', 'factor_value' => 39.7, 'unit' => 'kg CO2e/kg'],
+                    ['name' => 'Daging Sapi', 'factor_value' => 99.5, 'unit' => 'kg CO2e/kg'],
+                    ['name' => 'Daging Babi', 'factor_value' => 12.3, 'unit' => 'kg CO2e/kg'],
+                    ['name' => 'Keju', 'factor_value' => 23.9, 'unit' => 'kg CO2e/kg'],
+                    ['name' => 'Tahu', 'factor_value' => 3.2, 'unit' => 'kg CO2e/kg'],
+                    ['name' => 'Tempe', 'factor_value' => 2.0, 'unit' => 'kg CO2e/kg'],
+                    ['name' => 'Kopi', 'factor_value' => 28.5, 'unit' => 'kg CO2e/kg'],
+                    ['name' => 'Teh', 'factor_value' => 0.1, 'unit' => 'kg CO2e/kg'],
+                    ['name' => 'Roti', 'factor_value' => 1.6, 'unit' => 'kg CO2e/kg'],
+                    ['name' => 'Mie Instan', 'factor_value' => 1.5, 'unit' => 'kg CO2e/kg'],
+                ],
+                'sampah' => [
+                    ['name' => 'Plastik', 'factor_value' => 6.0, 'unit' => 'kg CO2e/kg'],
+                    ['name' => 'Kertas/Karton', 'factor_value' => 1.04, 'unit' => 'kg CO2e/kg'],
+                ],
+                'kendaraan' => [
+                    ['name' => 'Mobil Bensin', 'factor_value' => 2.33, 'unit' => 'kg CO2e/liter', 'metadata' => ['type' => 'bbm']],
+                    ['name' => 'Mobil Solar', 'factor_value' => 2.68, 'unit' => 'kg CO2e/liter', 'metadata' => ['type' => 'bbm']],
+                    ['name' => 'Mobil Listrik', 'factor_value' => $efListrik, 'unit' => 'kg CO2e/kWh', 'metadata' => ['type' => 'ev', 'default_kwh_km' => 0.15]],
+                    ['name' => 'Motor Bensin', 'factor_value' => 2.33, 'unit' => 'kg CO2e/liter', 'metadata' => ['type' => 'bbm']],
+                    ['name' => 'Motor Listrik', 'factor_value' => $efListrik, 'unit' => 'kg CO2e/kWh', 'metadata' => ['type' => 'ev', 'default_kwh_km' => 0.03]],
+                    ['name' => 'Bus Solar (Publik)', 'factor_value' => 0.104, 'unit' => 'kg CO2e/km/pax', 'metadata' => ['type' => 'public']],
+                    ['name' => 'Bus Listrik (Publik)', 'factor_value' => 0.04, 'unit' => 'kg CO2e/km/pax', 'metadata' => ['type' => 'public']],
+                ],
+            ],
+        ];
     }
 
     // ── Reactive recalculate on any property change ──────────────────────────
@@ -182,25 +306,38 @@ class CarbonCalculator extends Component
 
     // ── Helpers ───────────────────────────────────────────────────────────────
 
+    /**
+     * In-memory lookup over the already loaded $efByCategory rows
+     * (DB rows in auth mode, static snapshot in guest mode).
+     * Avoids a DB query on every keystroke recalculation.
+     */
+    private function lookupEF(?int $id): ?array
+    {
+        if (! $id) return null;
+        foreach ($this->efByCategory as $rows) {
+            foreach ($rows as $row) {
+                if (($row['id'] ?? null) === $id) return $row;
+            }
+        }
+        return null;
+    }
+
     private function getEF(?int $id): float
     {
-        if (! $id) return 0;
-        $ef = EmissionFactor::find($id);
-        return $ef?->factor_value ?? 0;
+        return (float) ($this->lookupEF($id)['factor_value'] ?? 0);
     }
 
     private function getEFMeta(?int $id, string $key, $default = null): mixed
     {
-        if (! $id) return $default;
-        $ef = EmissionFactor::find($id);
-        return $ef?->metadata[$key] ?? $default;
+        $meta = $this->lookupEF($id)['metadata'] ?? null;
+        if (! is_array($meta)) return $default;
+        return $meta[$key] ?? $default;
     }
 
     private function getEFMetaFull(?int $id): array
     {
-        if (! $id) return [];
-        $ef = EmissionFactor::find($id);
-        return $ef?->metadata ?? [];
+        $meta = $this->lookupEF($id)['metadata'] ?? [];
+        return is_array($meta) ? $meta : [];
     }
 
     // ── Save transaction ──────────────────────────────────────────────────────
@@ -208,6 +345,11 @@ class CarbonCalculator extends Component
     public function saveTransaction(): void
     {
         $this->errorMsg = '';
+
+        if ($this->isGuestMode) {
+            $this->errorMsg = 'Masuk untuk menyimpan riwayat';
+            return;
+        }
 
         if ($this->previewCo2e <= 0) {
             $this->errorMsg = 'Masukkan data terlebih dahulu';
@@ -241,7 +383,7 @@ class CarbonCalculator extends Component
 
     private function buildAutoDesc(): string
     {
-        $ef = EmissionFactor::find(match ($this->activeTab) {
+        $row = $this->lookupEF(match ($this->activeTab) {
             'bahan_bakar' => $this->bb_ef_id,
             'elektronik'  => $this->el_ef_id,
             'penerbangan' => $this->fl_ef_id,
@@ -260,7 +402,7 @@ class CarbonCalculator extends Component
             'kendaraan'   => 'Kendaraan',
         ][$this->activeTab] ?? $this->activeTab;
 
-        return $ef ? "{$tabLabel} - {$ef->name}" : $tabLabel;
+        return $row ? "{$tabLabel} - {$row['name']}" : $tabLabel;
     }
 
     public function render()

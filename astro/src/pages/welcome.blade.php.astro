@@ -1,0 +1,316 @@
+---
+import LandingLayout from "../layouts/LandingLayout.astro";
+import Navbar from "../components/Navbar.astro";
+import Hero from "../components/Hero.astro";
+import About from "../components/About.astro";
+import Steps from "../components/Steps.astro";
+import Impact from "../components/Impact.astro";
+import CalculatorSection from "../components/CalculatorSection.astro";
+import CtaOffset from "../components/CtaOffset.astro";
+import Faq from "../components/Faq.astro";
+import Footer from "../components/Footer.astro";
+import Cursor from "../components/Cursor.astro";
+---
+
+<LandingLayout>
+    <Navbar />
+    <Hero />
+    <About />
+    <Steps />
+    <Impact />
+    <CalculatorSection />
+    <CtaOffset />
+    <Faq />
+    <Footer />
+    <Cursor />
+
+    <script is:inline>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Scroll Animation Observer (Reveal elements)
+            const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("active");
+                    }
+                });
+            }, revealOptions);
+
+            const revealElements = document.querySelectorAll(".reveal-up, .reveal-left, .reveal-right, .reveal-zoom");
+            revealElements.forEach((el) => revealObserver.observe(el));
+
+            // Scroll spy for navbar active state
+            const sections = document.querySelectorAll("#beranda, #tentang-kami, #kalkulator, #cta-offset, #faq");
+            const navLinks = document.querySelectorAll("#nav-links .nav-link");
+
+            const activeClasses = [
+                "text-[#1E3F35]",
+                "relative",
+                "after:absolute",
+                "after:bottom-[-4px]",
+                "after:left-0",
+                "after:w-full",
+                "after:h-[2px]",
+                "after:bg-[#A3D9A5]",
+                "after:rounded-full",
+            ];
+
+            function changeActiveLink(id) {
+                navLinks.forEach((link) => {
+                    const href = link.getAttribute("href");
+                    if (href === `#${id}`) {
+                        link.classList.add(...activeClasses);
+                        link.classList.remove("hover:text-[#1E3F35]", "transition-colors");
+                    } else {
+                        link.classList.remove(...activeClasses);
+                        link.classList.add("hover:text-[#1E3F35]", "transition-colors");
+                    }
+                });
+            }
+
+            const observerOptions = {
+                root: null,
+                rootMargin: "-20% 0px -40% 0px",
+                threshold: 0.1,
+            };
+
+            const sectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        changeActiveLink(entry.target.id);
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach((section) => {
+                if (section) sectionObserver.observe(section);
+            });
+
+            // Scroll Expansion Hero & Navbar Reveal Logic
+            const heroMediaContainer = document.getElementById("hero-media-container");
+            const heroBgImage = document.getElementById("hero-bg-image");
+            const titleFirst = document.getElementById("hero-title-first");
+            const titleRest = document.getElementById("hero-title-rest");
+            const scrollMarker = document.getElementById("hero-scroll-marker");
+            const expandedContent = document.getElementById("hero-expanded-content");
+
+            const navbarContainer = document.getElementById("floating-navbar-container");
+            const navbar = document.getElementById("floating-navbar");
+            const navbarContent = document.getElementById("navbar-content");
+
+            function handleScrollExpand() {
+                if (!heroMediaContainer) return;
+
+                const progress = Math.min(window.scrollY / window.innerHeight, 1);
+                const isMobile = window.innerWidth < 768;
+                const startWidth = isMobile ? 240 : 350;
+                const startHeight = isMobile ? 320 : 450;
+                const endWidth = window.innerWidth;
+                const endHeight = window.innerHeight;
+
+                const currentWidth = startWidth + progress * (endWidth - startWidth);
+                const currentHeight = startHeight + progress * (endHeight - startHeight);
+                const currentRadius = 24 - progress * 24;
+
+                // 1. Update media container size & border radius
+                heroMediaContainer.style.width = currentWidth + "px";
+                heroMediaContainer.style.height = currentHeight + "px";
+                heroMediaContainer.style.borderRadius = currentRadius + "px";
+
+                // 2. Background image opacity fade out
+                if (heroBgImage) {
+                    heroBgImage.style.opacity = 1 - progress;
+                }
+
+                // 3. Titles slide out horizontally
+                const textTranslateX = progress * 150;
+                if (titleFirst) {
+                    titleFirst.style.transform = "translateX(-" + textTranslateX + "vw)";
+                }
+                if (titleRest) {
+                    titleRest.style.transform = "translateX(" + textTranslateX + "vw)";
+                }
+
+                // 4. Scroll marker fade out
+                if (scrollMarker) {
+                    scrollMarker.style.opacity = Math.max(0, 1 - progress * 2.5);
+                }
+
+                // 5. Fade-in expanded content
+                if (expandedContent) {
+                    if (progress >= 0.95) {
+                        expandedContent.classList.remove("opacity-0", "pointer-events-none");
+                        expandedContent.classList.add("opacity-100");
+                    } else {
+                        expandedContent.classList.remove("opacity-100");
+                        expandedContent.classList.add("opacity-0", "pointer-events-none");
+                    }
+                }
+
+                // 6. Navbar Transition (Center-out expansion)
+                if (navbarContainer && navbar && navbarContent) {
+                    if (progress >= 0.98) {
+                        navbarContainer.classList.remove("opacity-0", "-translate-y-12", "scale-95", "pointer-events-none");
+                        navbar.style.width = "100%";
+                        navbar.style.maxWidth = "72rem";
+                        navbar.classList.remove("w-[60px]", "opacity-0");
+
+                        setTimeout(() => {
+                            const currentProgress = Math.min(window.scrollY / window.innerHeight, 1);
+                            if (currentProgress >= 0.98) {
+                                navbarContent.classList.remove("opacity-0", "pointer-events-none");
+                                navbarContent.classList.add("opacity-100");
+                            }
+                        }, 200);
+                    } else {
+                        navbarContent.classList.remove("opacity-100");
+                        navbarContent.classList.add("opacity-0", "pointer-events-none");
+                        navbar.style.width = "60px";
+                        navbar.style.maxWidth = "";
+                        navbar.classList.add("opacity-0");
+                        navbarContainer.classList.add("opacity-0", "-translate-y-12", "scale-95", "pointer-events-none");
+                    }
+                }
+            }
+
+            window.addEventListener("scroll", () => {
+                if (window.scrollY === 0) {
+                    changeActiveLink("beranda");
+                }
+                handleScrollExpand();
+            });
+
+            window.addEventListener("resize", handleScrollExpand);
+
+            // Initial call to set positions on page load
+            handleScrollExpand();
+
+            // Slider Logic
+            const slides = document.getElementById("slides");
+            const dots = document.querySelectorAll(".slider-dot");
+            let currentSlide = 0;
+            const totalSlides = 3;
+
+            function updateSlider(index) {
+                if (!slides) return;
+                currentSlide = (index + totalSlides) % totalSlides;
+                slides.style.transform = `translateX(-${currentSlide * (100 / totalSlides)}%)`;
+
+                dots.forEach((dot, i) => {
+                    if (i === currentSlide) {
+                        dot.classList.add("bg-[#62F369]", "w-6");
+                        dot.classList.remove("bg-white/50", "w-2");
+                    } else {
+                        dot.classList.add("bg-white/50", "w-2");
+                        dot.classList.remove("bg-[#62F369]", "w-6");
+                    }
+                });
+            }
+
+            document.getElementById("slider-prev")?.addEventListener("click", () => updateSlider(currentSlide - 1));
+            document.getElementById("slider-next")?.addEventListener("click", () => updateSlider(currentSlide + 1));
+
+            dots.forEach((dot) => {
+                dot.addEventListener("click", (e) => {
+                    updateSlider(parseInt(e.target.dataset.idx));
+                });
+            });
+
+            // Auto slide
+            if (slides) {
+                setInterval(() => updateSlider(currentSlide + 1), 6000);
+            }
+
+            // Custom Cursor Logic
+            if (window.matchMedia("(min-width: 768px)").matches) {
+                const cursor = document.getElementById("custom-cursor");
+                const cursorLabel = document.getElementById("cursor-label");
+                const cursorArrow = document.getElementById("cursor-svg");
+                const cursorHand = document.getElementById("cursor-hand");
+
+                const labels = [
+                    "Sustainability Hero",
+                    "Eco Warrior",
+                    "Climate Champion",
+                    "Green Guardian",
+                    "Earth Protector",
+                    "Carbon Saver",
+                ];
+
+                if (cursorLabel) {
+                    cursorLabel.textContent = labels[Math.floor(Math.random() * labels.length)];
+                }
+
+                let mouseX = 0;
+                let mouseY = 0;
+
+                document.addEventListener("mousemove", (e) => {
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+
+                    if (cursor) {
+                        cursor.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+                    }
+
+                    const hoverTarget = e.target.closest(
+                        'a, button, [role="button"], .cursor-pointer, input[type="submit"], input[type="button"], select, .faq-trigger, [onclick]'
+                    );
+                    if (hoverTarget) {
+                        cursorArrow?.classList.add("hidden");
+                        cursorHand?.classList.remove("hidden");
+                    } else {
+                        cursorArrow?.classList.remove("hidden");
+                        cursorHand?.classList.add("hidden");
+                    }
+                });
+
+                document.addEventListener("mousedown", (e) => {
+                    cursorLabel?.classList.add("scale-95");
+
+                    const droplet = document.createElement("div");
+                    droplet.className = "droplet-effect";
+                    droplet.style.left = `${e.clientX}px`;
+                    droplet.style.top = `${e.clientY}px`;
+                    document.body.appendChild(droplet);
+
+                    setTimeout(() => droplet.remove(), 400);
+                });
+
+                document.addEventListener("mouseup", () => {
+                    cursorLabel?.classList.remove("scale-95");
+                });
+            }
+
+            // FAQ Accordion Logic
+            const faqTriggers = document.querySelectorAll(".faq-trigger");
+            faqTriggers.forEach((trigger) => {
+                trigger.addEventListener("click", () => {
+                    const panel = trigger.nextElementSibling;
+                    const icon = trigger.querySelector(".faq-icon");
+
+                    if (panel.style.maxHeight) {
+                        panel.style.maxHeight = null;
+                        panel.style.opacity = "0";
+                        icon?.classList.remove("rotate-180");
+                        trigger.classList.remove("text-[#1E3F35]");
+                        trigger.classList.add("text-[#111827]");
+                    } else {
+                        document.querySelectorAll(".faq-panel").forEach((p) => {
+                            p.style.maxHeight = null;
+                            p.style.opacity = "0";
+                            p.previousElementSibling.querySelector(".faq-icon")?.classList.remove("rotate-180");
+                            p.previousElementSibling.classList.remove("text-[#1E3F35]");
+                            p.previousElementSibling.classList.add("text-[#111827]");
+                        });
+
+                        panel.style.maxHeight = panel.scrollHeight + "px";
+                        panel.style.opacity = "1";
+                        icon?.classList.add("rotate-180");
+                        trigger.classList.remove("text-[#111827]");
+                        trigger.classList.add("text-[#1E3F35]");
+                    }
+                });
+            });
+        });
+    </script>
+</LandingLayout>

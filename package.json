@@ -4,7 +4,9 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite"
+        "dev": "vite",
+        "astro:dev": "npm --prefix astro run dev",
+        "astro:build": "npm --prefix astro install --no-audit --no-fund && npm --prefix astro run build"
     },
     "dependencies": {
         "@tailwindcss/vite": "^4.1.11",

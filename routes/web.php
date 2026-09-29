@@ -2,7 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'welcome')->name('home');
+// Landing page digenerate dari Astro (astro/src/pages/welcome.blade.php.astro)
+// via adapter astro-laravel -> resources/views/astro/welcome.blade.php.
+// File lama dibackup sebagai `welcome-legacy`. Rebuild dengan `npm run build:astro`.
+Route::view('/', 'astro.welcome')->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('dashboard',    'dashboard')->name('dashboard');

@@ -1,0 +1,21 @@
+{
+    "$schema": "https://www.schemastore.org/package.json",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "astro dev --host 127.0.0.1 --port 4321",
+        "build": "astro build",
+        "preview": "astro preview"
+    },
+    "dependencies": {
+        "astro": "^6.1.9",
+        "astro-laravel": "^0.0.5"
+    },
+    "devDependencies": {
+        "@tailwindcss/vite": "4.2.4",
+        "tailwindcss": "4.2.4"
+    },
+    "overrides": {
+        "vite": "7.3.6"
+    }
+}
